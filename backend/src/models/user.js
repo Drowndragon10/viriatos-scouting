@@ -28,6 +28,12 @@ const User = sequelize.define('users', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  accountStatus: {
+    type: DataTypes.ENUM('Ativo', 'Inativo'),
+    defaultValue: 'Ativo', 
+    allowNull: false,
+    field: 'accountStatus'
   }
 }, {
   timestamps: false,
