@@ -30,7 +30,7 @@ const User = sequelize.define('users', {
     allowNull: false,
   },
   accountStatus: {
-    type: DataTypes.ENUM('Ativo', 'Inativo'),
+    type: DataTypes.ENUM('Ativo', 'Bloqueado'),
     defaultValue: 'Ativo', 
     allowNull: false,
     field: 'accountStatus'
