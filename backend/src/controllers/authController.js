@@ -53,7 +53,7 @@ exports.register = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            idUserType: 2,
+            idUserType: 1,
         });
 
         if (newUser) {
