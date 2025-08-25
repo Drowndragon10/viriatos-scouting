@@ -87,97 +87,9 @@ const updateRole = async (req, res) => {
     }
 };
 
-const getUserStats = async (req, res) => {
-    try {
-        const admins = await User.count({
-            include: {
-                model: UserType,
-                as: "userType",
-                where: { nome: "Administrador" },
-            },
-        });
-
-        const coaches = await User.count({
-            include: {
-                model: UserType,
-                as: "userType",
-                where: { nome: "Treinador" },
-            },
-        });
-
-        const scouts = await User.count({
-            include: {
-                model: UserType,
-                as: "userType",
-                where: { nome: "Olheiro" },
-            },
-        });
-
-        res.json({
-            admins,
-            coaches,
-            scouts,
-        });
-    } catch (error) {
-        console.error("Erro ao buscar estatísticas de utilizadores:", error);
-        res.status(500).json({ error: "Erro ao buscar estatísticas de utilizadores" });
-    }
-};
-
-const getAccountStats = async (req, res) => {
-    try {
-        const activeAccounts = await User.count({
-            where: { estadoConta: "Ativo" },
-        });
-
-        const inactiveAccounts = await User.count({
-            where: { estadoConta: "Inativo" },
-        });
-
-        res.json({
-            activeAccounts,
-            inactiveAccounts,
-        });
-    } catch (error) {
-        console.error("Erro ao buscar estatísticas de contas:", error);
-        res.status(500).json({ error: "Erro ao buscar estatísticas de contas" });
-    }
-};
-
-const getReportStats = async (req, res) => {
-    try {
-        const approved = await Report.count({
-            where: { estado: "Aprovado" },
-        });
-
-        const rejected = await Report.count({
-            where: { estado: "Reprovado" },
-        });
-
-        const pending = await Report.count({
-            where: { estado: "Em Revisão" },
-        });
-
-        const total = await Report.count();
-
-        res.json({
-            approved,
-            rejected,
-            pending,
-            total,
-        });
-    } catch (error) {
-        console.error("Erro ao buscar estatísticas de relatórios:", error);
-        res.status(500).json({ error: "Erro ao buscar estatísticas de relatórios" });
-    }
-};
-
 module.exports = { 
     getUsersData, 
     block, 
     unblock, 
-    updateRole, 
-    getUserStats, 
-    getAccountStats, 
-    getReportStats 
+    updateRole
 };

@@ -3,7 +3,7 @@ const AgeCategory = require('../models/ageCategory');
 const TeamType = require('../models/teamType');
 const User = require('../models/user');
 
-// 📌 Get all Teams (with pagination and optional filtering by TeamType)
+
 const getTeams = async (req, res) => {
     try {
         const { page = 1, limit = 10, teamTypeId } = req.query;
@@ -139,7 +139,7 @@ const deleteTeam = async (req, res) => {
 };
 
 // 📌 Get Team by User ID
-const getTeamByUserId = async (req, res) => {
+const getTeamsByCoach = async (req, res) => {
     try {
         const { userId } = req.params;
         const teams = await Team.findAll({
@@ -164,7 +164,7 @@ const getTeamByUserId = async (req, res) => {
 module.exports = {
     getTeams,
     getTeamById,
-    getTeamByUserId,
+    getTeamsByCoach,
     createTeam,
     updateTeam,
     deleteTeam,

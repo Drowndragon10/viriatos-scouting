@@ -156,8 +156,7 @@ const deleteAthlete = async (req, res) => {
     }
 };
 
-// Get athletes by filter
-const getAthletesByFilter = async (req, res) => {
+/*const getAthletesByFilter = async (req, res) => {
     const { name, position, team, rating } = req.query;
 
     try {
@@ -180,7 +179,7 @@ const getAthletesByFilter = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+};*/
 
 module.exports = {
     getAthletes,
@@ -188,6 +187,6 @@ module.exports = {
     createAthlete,
     updateAthlete,
     deleteAthlete,
-    getAthletesByFilter,
+    //getAthletesByFilter,
     getAthletesByTeam,
 };
