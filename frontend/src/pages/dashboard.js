@@ -141,7 +141,7 @@ const DashboardAdmin = () => {
 
   return (
     <div style={{ display: "flex", backgroundColor: "#2C2C2C", height: "100vh", overflow: "hidden" }}>
-      <Sidebar/>
+      <Sidebar />
       <div className="mt-5" style={{ flex: 1, overflowY: 'auto' }}>
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <h2 className="mb-5 text-white">Administração</h2>
@@ -192,7 +192,7 @@ const DashboardAdmin = () => {
               <p className="text-white">Não foram encontrados utilizadores.</p>
             ) : (
               <>
-                <table className="table table-hover">
+                <table className="table-custom">
                   <thead>
                     <tr>
                       <th>Nome</th>
@@ -213,7 +213,6 @@ const DashboardAdmin = () => {
                               value={newRole}
                               onChange={(e) => setNewRole(e.target.value)}
                               className="form-select"
-                              style={{ width: "180px" }}
                             >
                               {types.map((type) => (
                                 <option key={type.idUserType} value={type.name}>
@@ -231,26 +230,23 @@ const DashboardAdmin = () => {
                             <>
                               <FaCheck
                                 className="text-success"
-                                style={{ cursor: "pointer", marginRight: '1rem' }}
+                                style={{ cursor: "pointer", marginRight: "1rem" }}
                                 onClick={() => editarRole(user.idUser)}
-                                title="Confirmar Edição"
                               />
                               <FaTimes
                                 className="text-warning"
-                                style={{ cursor: "pointer", marginRight: '1rem' }}
+                                style={{ cursor: "pointer", marginRight: "1rem" }}
                                 onClick={() => setEditingUserId(null)}
-                                title="Cancelar Edição"
                               />
                             </>
                           ) : (
                             <FaEdit
                               className="text-primary"
-                              style={{ cursor: "pointer", marginRight: '1rem' }}
+                              style={{ cursor: "pointer", marginRight: "1rem" }}
                               onClick={() => {
                                 setEditingUserId(user.idUser);
                                 setNewRole(user.userType?.name);
                               }}
-                              title="Editar Role"
                             />
                           )}
 
@@ -259,14 +255,12 @@ const DashboardAdmin = () => {
                               className="text-danger"
                               style={{ cursor: "pointer" }}
                               onClick={() => bloquearConta(user.idUser)}
-                              title="Bloquear Conta"
                             />
                           ) : (
                             <FaUnlock
                               className="text-success"
                               style={{ cursor: "pointer" }}
                               onClick={() => desbloquearConta(user.idUser)}
-                              title="Desbloquear Conta"
                             />
                           )}
                         </td>

@@ -129,10 +129,23 @@ const CreateAthlete = () => {
                     </select>
 
                     <select value={idGuardian} onChange={e => setIdGuardian(e.target.value)}
-                        className="form-select mb-3" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }}>
+                        className="form-select mb-2" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }}>
                         <option value="">Selecione um encarregado</option>
-                        {guardians.map(g => <option key={g.idGuardian} value={g.idGuardian}>{g.name || g.nome}</option>)}
+                        {guardians.map(g => (
+                            <option key={g.idGuardian} value={g.idGuardian}>
+                                {g.name || g.nome}
+                            </option>
+                        ))}
                     </select>
+
+                    <div className="mb-3">
+                        <a
+                            href="/guardian/create"
+                            style={{ color: 'white', textDecoration: 'underline', cursor: 'pointer' }}
+                        >
+                            Ainda não tem encarregado? Registe aqui!
+                        </a>
+                    </div>
 
                     <select value={idTeam} onChange={e => setIdTeam(e.target.value)}
                         className="form-select mb-3" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }}>

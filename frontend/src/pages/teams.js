@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/sidebar";
-import Card from "../components/Card";
 import { getUserRoleFromToken, getUserIdFromToken } from "../components/jwtDecode";
+import { FaEdit, FaBan } from "react-icons/fa";
 
-const TeamsList = () => {
+const Teams = () => {
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState(null);
   const [nameFilter, setNameFilter] = useState("");
@@ -109,7 +109,7 @@ const TeamsList = () => {
           <h2 className="mb-5 text-white">Teams</h2>
 
           {/* Filters and Add Button */}
-          <div className="d-flex flex-wrap justify-content-between mb-5">
+          <div className="d-flex flex-wrap justify-content-between mb-4">
             <div className="d-flex flex-wrap gap-3">
               <input
                 type="text"
@@ -165,39 +165,67 @@ const TeamsList = () => {
             )}
           </div>
 
-          <div className="row">
-            {filterTeams().length === 0 ? (
-              <p className="text-center text-white">No teams found.</p>
-            ) : (
-              filterTeams().map((team) => (
-                <div className="col-md-3 mb-4" key={team.idTeam}>
-                  <Card
-                    nome={team.name}
-                    descricao={team.district}
-                    onEdit={() => handleEdit(team.idTeam)}
-                    onDelete={() => handleDelete(team.idTeam)}
-                  >
-                    {userRole === 2 && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/roster/${team.idTeam}`);
-                        }}
-                        className="btn mt-3"
-                        style={{
-                          backgroundColor: "#2C2C2C",
-                          width: "100px",
-                          border: "none",
-                          color: "white",
-                        }}
-                      >
-                        Roster
-                      </button>
-                    )}
-                  </Card>
-                </div>
-              ))
-            )}
+          {/* Table */}
+          <div className="table-responsive">
+            <table className="table-custom">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Distrito</th>
+                  <th>Categoria Etária</th>
+                  <th>Tipo de Equipa</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filterTeams().length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="text-center text-muted">
+                      Nenhuma equipa encontrada.
+                    </td>
+                  </tr>
+                ) : (
+                  filterTeams().map((team) => (
+                    <tr key={team.idTeam}>
+                      <td>{team.name}</td>
+                      <td>{team.district}</td>
+                      <td>
+                        {ageCategories.find((c) => c.idAgeCategory === team.idAgeCategory)?.name || "-"}
+                      </td>
+                      <td>
+                        {teamTypes.find((t) => t.idTeamType === team.idTeamType)?.name || "-"}
+                      </td>
+                      <td>
+                        {userRole === 1 && (
+                          <>
+                            <FaEdit
+                              className="text-primary"
+                              style={{ cursor: "pointer", marginRight: "1rem" }}
+                              onClick={() => handleEdit(team.idTeam)}
+                              title="Editar Equipa"
+                            />
+                            <FaBan
+                              className="text-danger"
+                              style={{ cursor: "pointer" }}
+                              onClick={() => handleDelete(team.idTeam)}
+                              title="Eliminar Equipa"
+                            />
+                          </>
+                        )}
+                        {userRole === 2 && (
+                          <button
+                            className="btn btn-sm btn-secondary"
+                            onClick={() => navigate(`/roster/${team.idTeam}`)}
+                          >
+                            Roster
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -205,4 +233,4 @@ const TeamsList = () => {
   );
 };
 
-export default TeamsList;
+export default Teams;

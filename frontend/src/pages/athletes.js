@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar from "../components/sidebar";
-import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
+import { FaEdit, FaTimes } from "react-icons/fa";
 import { getUserRoleFromToken } from "../components/jwtDecode";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,7 +16,6 @@ const AthletesPage = () => {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [filterPosition, setFilterPosition] = useState('');
   const [filterBirthYear, setFilterBirthYear] = useState('');
-  const [filterRating, setFilterRating] = useState('');
   const [filterTeam, setFilterTeam] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState(null);
@@ -52,15 +51,13 @@ const AthletesPage = () => {
     fetchData();
   }, [apiUrl]);
 
-  const handleAdd = () => navigate("/create-athlete");
+  const handleAdd = () => navigate("/athlete/create");
   const handleEdit = (idAthlete) => navigate(`/edit-athlete/${idAthlete}`);
-
   const handleDelete = async (idAthlete) => {
     if (!window.confirm("Tem certeza que deseja excluir este atleta?")) {
       setMessage('A exclusão foi cancelada.');
       return;
     }
-
     try {
       const token = localStorage.getItem('authToken');
       await axios.delete(`${apiUrl}/athletes/${idAthlete}`, {
@@ -78,19 +75,15 @@ const AthletesPage = () => {
 
   const handleFilterChange = () => {
     let filtered = allAthletes;
-
     if (filterPosition) filtered = filtered.filter(a => a.position?.name === filterPosition);
     if (filterBirthYear) filtered = filtered.filter(a => new Date(a.birthDate).getFullYear() === filterBirthYear);
-    if (filterRating) filtered = filtered.filter(a => a.rating === parseFloat(filterRating));
     if (filterTeam) filtered = filtered.filter(a => a.team?.name === filterTeam);
-
     setAthletes(filtered);
   };
 
   const handleClearFilters = () => {
     setFilterPosition('');
     setFilterBirthYear('');
-    setFilterRating('');
     setFilterTeam('');
     setAthletes(allAthletes);
   };
@@ -125,7 +118,7 @@ const AthletesPage = () => {
             </div>
             {isAdmin && (
               <button onClick={handleAdd} className="btn" style={{ backgroundColor: "#121212", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}>
-                + Criar Atleta
+                + Adicionar Atleta
               </button>
             )}
           </div>
@@ -144,20 +137,6 @@ const AthletesPage = () => {
                     <option value="">Todas as Posições</option>
                     {positions.map(p => <option key={p.idPosition} value={p.name}>{p.name}</option>)}
                   </select>
-                </div>
-
-                <div className="me-3">
-                  <label className="text-white mb-1">Rating (0 a 5)</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="5"
-                    step="0.1"
-                    value={filterRating}
-                    onChange={(e) => setFilterRating(e.target.value)}
-                    className="form-control"
-                    style={{ backgroundColor: '#121212', color: 'white', border: 'none', width: '150px' }}
-                  />
                 </div>
 
                 <div className="me-3">
@@ -193,22 +172,42 @@ const AthletesPage = () => {
             </div>
           )}
 
-          <div className="row">
-            {filteredAthletes.length === 0 ? (
-              <p className="text-center text-white">Nenhum atleta encontrado.</p>
-            ) : (
-              filteredAthletes.map(a => (
-                <div className="col-md-3 mb-4" key={a.idAthlete}>
-                  <Card
-                    nome={a.name}
-                    descricao={a.position?.name}
-                    onEdit={isAdmin ? () => handleEdit(a.idAthlete) : undefined}
-                    onDelete={isAdmin ? () => handleDelete(a.idAthlete) : undefined}
-                  />
-                </div>
-              ))
-            )}
+          <div className="table-responsive">
+            <table className="table-custom">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Posição</th>
+                  <th>Equipa</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredAthletes.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" className="text-center text-white">Nenhum atleta encontrado.</td>
+                  </tr>
+                ) : (
+                  filteredAthletes.map(a => (
+                    <tr key={a.idAthlete} onClick={() => navigate(`/athlete/${a.idAthlete}`)} style={{ cursor: 'pointer' }}>
+                      <td>{a.name}</td>
+                      <td>{a.position?.name}</td>
+                      <td>{a.team?.name}</td>
+                      <td>
+                        {isAdmin && (
+                          <>
+                            <FaEdit className="text-primary" style={{ cursor: "pointer", marginRight: "1rem" }} onClick={(e) => { e.stopPropagation(); handleEdit(a.idAthlete); }} />
+                            <FaTimes className="text-danger" style={{ cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); handleDelete(a.idAthlete); }} />
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
+
         </div>
       </div>
     </div>

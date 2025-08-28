@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar from "../components/sidebar";
-import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
+import { FaEdit, FaTimes, FaCheck } from "react-icons/fa";
 
 const PositionsPage = () => {
   const [positions, setPositions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [mensagem, setMensagem] = useState('');
   const [error, setError] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [newName, setNewName] = useState('');
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -23,19 +25,16 @@ const PositionsPage = () => {
         setError('Erro ao carregar as posições.');
       }
     };
-
     fetchPositions();
   }, [apiUrl]);
 
   const handleAdd = () => navigate("/position/create");
-  //const handleEdit = (idPosition) => navigate(`/editarposicao/${idPosition}`);
 
   const handleDelete = async (idPosition) => {
     if (!window.confirm("Tem certeza que deseja excluir esta posição?")) {
       setMensagem('A exclusão foi cancelada.');
       return;
     }
-
     try {
       const token = localStorage.getItem('authToken');
       const config = { headers: { Authorization: `Bearer ${token}` } };
@@ -48,7 +47,24 @@ const PositionsPage = () => {
     }
   };
 
-  const handleSearchChange = (e) => setSearchTerm(e.target.value);
+  const handleEdit = (pos) => {
+    setEditingId(pos.idPosition);
+    setNewName(pos.name);
+  };
+
+  const saveEdit = async (idPosition) => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+      await axios.put(`${apiUrl}/positions/${idPosition}`, { name: newName }, config);
+      setPositions(positions.map(p => p.idPosition === idPosition ? { ...p, name: newName } : p));
+      setEditingId(null);
+      setMensagem('Posição atualizada com sucesso!');
+    } catch (err) {
+      console.error('Erro ao atualizar posição:', err);
+      setMensagem('Erro ao atualizar posição.');
+    }
+  };
 
   const filteredPositions = positions.filter(posicao =>
     posicao.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -70,7 +86,7 @@ const PositionsPage = () => {
               className="form-control"
               style={{ backgroundColor: '#121212', width: '300px', border: 'none', color: 'white' }}
               value={searchTerm}
-              onChange={handleSearchChange}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button
               onClick={handleAdd}
@@ -83,20 +99,68 @@ const PositionsPage = () => {
 
           {mensagem && <p className="text-white mb-3">{mensagem}</p>}
 
-          <div className="row">
-            {filteredPositions.length === 0 ? (
-              <p className="text-white">Nenhuma posição encontrada.</p>
-            ) : (
-              filteredPositions.map(posicao => (
-                <div key={posicao.idPosition} className="col-md-3 mb-4">
-                  <Card
-                    nome={posicao.name}
-                    //onEdit={() => handleEdit(posicao.idPosition)}
-                    onDelete={() => handleDelete(posicao.idPosition)}
-                  />
-                </div>
-              ))
-            )}
+          <div className="table-responsive">
+            <table className="table-custom">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredPositions.length === 0 ? (
+                  <tr>
+                    <td colSpan="2" className="text-center text-white">
+                      Nenhuma posição encontrada.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredPositions.map(posicao => (
+                    <tr key={posicao.idPosition}>
+                      <td>
+                        {editingId === posicao.idPosition ? (
+                          <input
+                            type="text"
+                            value={newName}
+                            onChange={(e) => setNewName(e.target.value)}
+                            className="form-control"
+                          />
+                        ) : (
+                          posicao.name
+                        )}
+                      </td>
+                      <td>
+                        {editingId === posicao.idPosition ? (
+                          <>
+                            <FaCheck
+                              className="text-success"
+                              style={{ cursor: "pointer", marginRight: "1rem" }}
+                              onClick={() => saveEdit(posicao.idPosition)}
+                            />
+                            <FaTimes
+                              className="text-warning"
+                              style={{ cursor: "pointer", marginRight: "1rem" }}
+                              onClick={() => setEditingId(null)}
+                            />
+                          </>
+                        ) : (
+                          <FaEdit
+                            className="text-primary"
+                            style={{ cursor: "pointer", marginRight: "1rem" }}
+                            onClick={() => handleEdit(posicao)}
+                          />
+                        )}
+                        <FaTimes
+                          className="text-danger"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleDelete(posicao.idPosition)}
+                        />
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

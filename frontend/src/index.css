@@ -8,6 +8,39 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* styles.css */
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-custom thead tr {
+  background-color: #FDD522;
+  color: #000;
+}
+
+.table-custom tbody tr {
+  background-color: #121212;
+  color: #fff;
+}
+
+.table-custom tbody tr:hover {
+  background-color: #1e1e1e;
+}
+
+.table-custom th,
+.table-custom td {
+  padding: 10px 15px;
+  border: none;
+}
+
+.table-custom td select {
+  background-color: #121212;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+
 h2{
   font-size: 1.7em !important;
 }
@@ -48,3 +81,6 @@ code {
   color: white !important; 
   opacity: 1 !important; 
 }
+
+
+

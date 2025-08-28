@@ -10,6 +10,7 @@ import Positions from './pages/positions';
 import CreatePositions from './pages/createPosition';
 import Athletes from './pages/athletes';
 import CreateAthlete from './pages/createAthlete';
+import CreateGuardian from './pages/createGuardian';
 
 import Teams from './pages/teams';
 function App() {
@@ -45,6 +46,9 @@ function App() {
         <Route
           path="/athlete/create"
           element={<ProtectedRoute element={CreateAthlete} allowedRoles={[1]} />} />
+          <Route
+          path="/guardian/create"
+          element={<ProtectedRoute element={CreateGuardian} allowedRoles={[1]} />} />
       </Routes>
     </Router>
   );
