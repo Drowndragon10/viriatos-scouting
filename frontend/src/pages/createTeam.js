@@ -55,9 +55,9 @@ const AddTeam = () => {
           name,
           county,
           district,
-          ageCategoryId: Number(idAgeCategory),
-          typeId: Number(idTeamType),
-          userId: Number(idUser),
+          idAgeCategory: Number(idAgeCategory),
+          idTeamType: Number(idTeamType),
+          idUser: Number(idUser),
         },
         config
       );
