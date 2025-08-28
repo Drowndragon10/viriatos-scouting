@@ -55,7 +55,7 @@ const getTeamById = async (req, res) => {
 // 📌 Create Team
 const createTeam = async (req, res) => {
     const { name, county, district, idAgeCategory, idTeamType, idUser } = req.body;
-
+    
     try {
         if (!name || !idAgeCategory || !idTeamType || !idUser) {
             return res.status(400).json({ message: 'All required fields must be filled.' });

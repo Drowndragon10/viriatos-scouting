@@ -1,6 +1,6 @@
 import React from "react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
-import { getUserRoleFromToken } from "../components/jwtDecode";
+import { getUserRoleFromToken } from "./jwtDecode";
 
 const Card = ({ nome, descricao, onEdit, onDelete, children, onClick }) => {
   const idUserType = getUserRoleFromToken();

@@ -34,14 +34,14 @@ const Sidebar = () => {
     const menuItems = [
         { icon: <FaHome />, label: 'Dashboard', path: '/dashboard', roles: [1] },
         { icon: <FaUsers />, label: 'Equipas', path: '/teams', roles: [1, 2, 3] },
-        { icon: <FaCalendarAlt />, label: 'Calendário de Jogos', path: '/jogos', roles: [1, 2, 3] },
-        { icon: <FaAward />, label: 'Categoria Etária', path: '/categorias', roles: [1] },
-        { icon: <FaUserTag />, label: 'Posições', path: '/posicoes', roles: [1] },
-        { icon: <FaUser />, label: 'Jogadores', path: '/atletas', roles: [1, 2, 3] },
-        { icon: <FaChartLine />, label: 'Relatórios', path: '/relatorios', roles: [1] },
-        { icon: <FaTasks />, label: 'Tarefas', path: '/tarefas', roles: [1] },
-        { icon: <FaTasks />, label: 'Minhas Tarefas', path: '/minhastarefas', roles: [3] },
-        { icon: <FaChartLine />, label: 'Meus Relatórios', path: '/relatorios', roles: [3] },
+        { icon: <FaCalendarAlt />, label: 'Calendário de Jogos', path: '/matches', roles: [1, 2, 3] },
+        { icon: <FaAward />, label: 'Categoria Etária', path: '/ageCategories', roles: [1] },
+        { icon: <FaUserTag />, label: 'Posições', path: '/positions', roles: [1] },
+        { icon: <FaUser />, label: 'Jogadores', path: '/athletes', roles: [1, 2, 3] },
+        { icon: <FaChartLine />, label: 'Relatórios', path: '/reports', roles: [1] },
+        { icon: <FaTasks />, label: 'Tarefas', path: '/tasks', roles: [1] },
+        { icon: <FaTasks />, label: 'Minhas Tarefas', path: '/myTasks', roles: [3] },
+        { icon: <FaChartLine />, label: 'Meus Relatórios', path: '/myReports', roles: [3] },
     ];
 
     const filteredMenuItems = menuItems.filter(item => item.roles.includes(idTipoUtilizador));

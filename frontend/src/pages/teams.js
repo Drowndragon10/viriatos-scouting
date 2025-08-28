@@ -81,7 +81,7 @@ const TeamsList = () => {
   };
 
   const handleEdit = (teamId) => {
-    navigate(`/editteam/${teamId}`);
+    navigate(`/team/edit/${teamId}`);
   };
 
   const handleDelete = async (teamId) => {
