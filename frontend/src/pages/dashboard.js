@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaBan, FaUnlock, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
+import Sidebar from "../components/sidebar";
 
 const DashboardAdmin = () => {
   const [users, setUsers] = useState([]);
@@ -22,15 +23,17 @@ const DashboardAdmin = () => {
       const response = await axios.get(`${apiUrl}/admin`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUsers(response.data.utilizadores);
+
+      setUsers(response.data?.users || []);
     } catch (error) {
       console.error("Erro ao buscar dados do dashboard:", error);
+      setUsers([]);
     }
   }, [apiUrl, token]);
 
   const carregarTipos = useCallback(async () => {
     try {
-      const response = await axios.get(`${apiUrl}/tiposUtilizadores/`, {
+      const response = await axios.get(`${apiUrl}/userTypes/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTypes(response.data);
@@ -44,27 +47,27 @@ const DashboardAdmin = () => {
     carregarTipos();
   }, [carregarUsers, carregarTipos]);
 
-  const atualizarEstadoUsuario = (idUtilizador, novoEstado) => {
+  const atualizarEstadoUsuario = (idUser, newAccountStatus) => {
     setUsers(users.map(user =>
-      user.idUtilizador === idUtilizador
-        ? { ...user, estadoConta: novoEstado }
+      user.idUser === idUser
+        ? { ...user, accountStatus: newAccountStatus }
         : user
     ));
   };
 
-  const editarRole = async (idUtilizador) => {
+  const editarRole = async (idUser) => {
     try {
       await axios.put(
-        `${apiUrl}/admin/users/updateRole/${idUtilizador}`,
-        { tipoUtilizador: newRole },
+        `${apiUrl}/admin/users/updateRole/${idUser}`,
+        { userType: newRole },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       console.log("Tipo de utilizador atualizado com sucesso");
       setUsers(users.map(user =>
-        user.idUtilizador === idUtilizador
-          ? { ...user, tipoUtilizador: { nome: newRole } }
+        user.idUser === idUser
+          ? { ...user, userType: { name: newRole } }
           : user
       ));
       setEditingUserId(null);
@@ -73,10 +76,10 @@ const DashboardAdmin = () => {
     }
   };
 
-  const bloquearConta = async (idUtilizador) => {
+  const bloquearConta = async (idUser) => {
     try {
       await axios.put(
-        `${apiUrl}/admin/users/block/${idUtilizador}`,
+        `${apiUrl}/admin/users/block/${idUser}`,
         {},
         {
           headers: {
@@ -85,16 +88,16 @@ const DashboardAdmin = () => {
         }
       );
       console.log("Conta bloqueada com sucesso");
-      atualizarEstadoUsuario(idUtilizador, "Inativo");
+      atualizarEstadoUsuario(idUser, "Inativo");
     } catch (error) {
       console.error("Erro ao bloquear conta:", error);
     }
   };
 
-  const desbloquearConta = async (idUtilizador) => {
+  const desbloquearConta = async (idUser) => {
     try {
       await axios.put(
-        `${apiUrl}/admin/users/unblock/${idUtilizador}`,
+        `${apiUrl}/admin/users/unblock/${idUser}`,
         {},
         {
           headers: {
@@ -103,7 +106,7 @@ const DashboardAdmin = () => {
         }
       );
       console.log("Conta desbloqueada com sucesso");
-      atualizarEstadoUsuario(idUtilizador, "Ativo");
+      atualizarEstadoUsuario(idUser, "Ativo");
     } catch (error) {
       console.error("Erro ao desbloquear conta:", error);
     }
@@ -112,9 +115,9 @@ const DashboardAdmin = () => {
   const filteredUsers = useMemo(() => {
     return users.filter(
       (user) =>
-        user.nome.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (filterRole === "" || user.tipoUtilizador?.nome === filterRole) &&
-        (filterState === "" || user.estadoConta === filterState)
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (filterRole === "" || user.userType?.name === filterRole) &&
+        (filterState === "" || user.accountStatus === filterState)
     );
   }, [users, searchTerm, filterRole, filterState]);
 
@@ -138,7 +141,7 @@ const DashboardAdmin = () => {
 
   return (
     <div style={{ display: "flex", backgroundColor: "#2C2C2C", height: "100vh", overflow: "hidden" }}>
-      
+      <Sidebar/>
       <div className="mt-5" style={{ flex: 1, overflowY: 'auto' }}>
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <h2 className="mb-5 text-white">Administração</h2>
@@ -160,8 +163,8 @@ const DashboardAdmin = () => {
               >
                 <option value="">Todas Permissões</option>
                 {types.map((type) => (
-                  <option key={type.idTipoUtilizador} value={type.nome}>
-                    {type.nome}
+                  <option key={type.idUserType} value={type.name}>
+                    {type.name}
                   </option>
                 ))}
               </select>
@@ -201,11 +204,11 @@ const DashboardAdmin = () => {
                   </thead>
                   <tbody>
                     {currentUsers.map((user) => (
-                      <tr key={user.idUtilizador}>
-                        <td>{user.nome}</td>
+                      <tr key={user.idUser}>
+                        <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>
-                          {editingUserId === user.idUtilizador ? (
+                          {editingUserId === user.idUser ? (
                             <select
                               value={newRole}
                               onChange={(e) => setNewRole(e.target.value)}
@@ -213,23 +216,23 @@ const DashboardAdmin = () => {
                               style={{ width: "180px" }}
                             >
                               {types.map((type) => (
-                                <option key={type.idTipoUtilizador} value={type.nome}>
-                                  {type.nome}
+                                <option key={type.idUserType} value={type.name}>
+                                  {type.name}
                                 </option>
                               ))}
                             </select>
                           ) : (
-                            user.tipoUtilizador?.nome
+                            user.userType?.name
                           )}
                         </td>
-                        <td>{user.estadoConta}</td>
+                        <td>{user.accountStatus}</td>
                         <td>
-                          {editingUserId === user.idUtilizador ? (
+                          {editingUserId === user.idUser ? (
                             <>
                               <FaCheck
                                 className="text-success"
                                 style={{ cursor: "pointer", marginRight: '1rem' }}
-                                onClick={() => editarRole(user.idUtilizador)}
+                                onClick={() => editarRole(user.idUser)}
                                 title="Confirmar Edição"
                               />
                               <FaTimes
@@ -244,25 +247,25 @@ const DashboardAdmin = () => {
                               className="text-primary"
                               style={{ cursor: "pointer", marginRight: '1rem' }}
                               onClick={() => {
-                                setEditingUserId(user.idUtilizador);
-                                setNewRole(user.tipoUtilizador?.nome);
+                                setEditingUserId(user.idUser);
+                                setNewRole(user.userType?.name);
                               }}
                               title="Editar Role"
                             />
                           )}
 
-                          {user.estadoConta === "Ativo" ? (
+                          {user.accountStatus === "Ativo" ? (
                             <FaBan
                               className="text-danger"
                               style={{ cursor: "pointer" }}
-                              onClick={() => bloquearConta(user.idUtilizador)}
+                              onClick={() => bloquearConta(user.idUser)}
                               title="Bloquear Conta"
                             />
                           ) : (
                             <FaUnlock
                               className="text-success"
                               style={{ cursor: "pointer" }}
-                              onClick={() => desbloquearConta(user.idUtilizador)}
+                              onClick={() => desbloquearConta(user.idUser)}
                               title="Desbloquear Conta"
                             />
                           )}

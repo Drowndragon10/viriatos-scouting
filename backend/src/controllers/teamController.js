@@ -54,54 +54,42 @@ const getTeamById = async (req, res) => {
 
 // 📌 Create Team
 const createTeam = async (req, res) => {
-    const { name, county, district, ageCategoryId, typeId, userId } = req.body;
+    const { name, county, district, idAgeCategory, idTeamType, idUser } = req.body;
 
     try {
-        if (!name || !ageCategoryId || !typeId || !userId) {
+        if (!name || !idAgeCategory || !idTeamType || !idUser) {
             return res.status(400).json({ message: 'All required fields must be filled.' });
         }
 
         // Validate associations
-        const ageCategory = await AgeCategory.findByPk(ageCategoryId);
-        const type = await TeamType.findByPk(typeId);
-        const user = await User.findByPk(userId);
+        const ageCategory = await AgeCategory.findByPk(idAgeCategory);
+        const type = await TeamType.findByPk(idTeamType);
+        const user = await User.findByPk(idUser);
 
-        if (!ageCategory) {
-            return res.status(400).json({ message: 'Age Category not found.' });
-        }
-        if (!type) {
-            return res.status(400).json({ message: 'Team Type not found.' });
-        }
-        if (!user) {
-            return res.status(400).json({ message: 'Coach not found.' });
-        }
+        if (!ageCategory) return res.status(400).json({ message: 'Age Category not found.' });
+        if (!type) return res.status(400).json({ message: 'Team Type not found.' });
+        if (!user) return res.status(400).json({ message: 'Coach not found.' });
 
         // Ensure the coach does not already manage a team
-        const existingTeam = await Team.findOne({ where: { userId } });
-        if (existingTeam) {
-            return res.status(400).json({ message: 'This coach is already assigned to a team.' });
-        }
+        const existingTeam = await Team.findOne({ where: { idUser } });
+        if (existingTeam) return res.status(400).json({ message: 'This coach is already assigned to a team.' });
 
         // Create new team
         const newTeam = await Team.create({
             name,
             county,
             district,
-            ageCategoryId,
-            typeId,
-            userId,
+            idAgeCategory,
+            idTeamType,
+            idUser,
         });
 
-        return res.status(201).json({
-            message: 'Team created successfully!',
-            team: newTeam,
-        });
+        return res.status(201).json({ message: 'Team created successfully!', team: newTeam });
     } catch (error) {
         console.error('Error creating team:', error);
         return res.status(500).json({ message: 'Internal error creating team.' });
     }
 };
-
 // 📌 Update Team
 const updateTeam = async (req, res) => {
     try {

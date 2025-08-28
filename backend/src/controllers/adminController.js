@@ -14,6 +14,8 @@ const getUsersData = async (req, res) => {
         });
 
         res.json({ users });
+
+        console.log(users);
     } catch (error) {
         console.error("Erro ao buscar dados do dashboard:", error);
         res.status(500).json({ error: "Erro ao buscar dados do dashboard" });

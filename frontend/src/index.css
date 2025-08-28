@@ -1,13 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Sora', sans-serif !important;
+  font-size: 14px !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+h2{
+  font-size: 1.7em !important;
+}
+
+.swal2-close{
+  font-size: 20px !important;
+}
+
+h4{
+  font-size: 1.1em !important;
+}
+
+h5{
+  font-size: 1.2em !important;
+}
+
+span{
+  font-size: 15px !important;
+}
+
+.scouting{
+  font-size: 2.5rem !important;
+}
+
+.titulo{
+  font-size: 20px !important;
+}
+
+select, button, input{
+  font-size: 14px !important;
+}
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Sora', sans-serif !important;
+}
+
+::placeholder {
+  color: white !important; 
+  opacity: 1 !important; 
 }
