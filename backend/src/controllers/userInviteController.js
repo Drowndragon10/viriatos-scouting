@@ -37,9 +37,9 @@ const inviteUser = async (req, res) => {
             Messages: [
                 {
                     From: {
-                        Email: email, 
-                        Name: 'Convite App Scouting',
-                    },
+                    Email: 'jetmailgoncalo@gmail.com',
+                    Name: 'Scouting App',
+                },
                     To: [
                         {
                             Email: email,

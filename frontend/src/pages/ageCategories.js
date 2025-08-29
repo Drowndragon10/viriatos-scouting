@@ -9,7 +9,7 @@ const AgeCategoriesPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
   const [editingId, setEditingId] = useState(null);
-  const [newName, setNewName] = useState('');
+  const [editValues, setEditValues] = useState({});
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -22,7 +22,7 @@ const AgeCategoriesPage = () => {
         setCategorias(response.data);
       } catch (err) {
         setError('Erro ao carregar as categorias etárias.');
-        console.error(err);
+        console.error(err.response?.data || err.message);
       }
     };
     fetchCategorias();
@@ -38,24 +38,27 @@ const AgeCategoriesPage = () => {
       await axios.delete(`${apiUrl}/ageCategories/${idCategory}`, config);
       setCategorias(categorias.filter(c => c.idCategory !== idCategory));
     } catch (err) {
-      console.error('Erro ao apagar categoria:', err);
+      console.error('Erro ao apagar categoria:', err.response?.data || err.message);
     }
   };
 
   const handleEdit = (categoria) => {
     setEditingId(categoria.idCategory);
-    setNewName(categoria.name);
+    setEditValues(prev => ({ ...prev, [categoria.idCategory]: categoria.name }));
   };
 
   const saveEdit = async (idCategory) => {
     try {
       const token = localStorage.getItem('authToken');
       const config = { headers: { Authorization: `Bearer ${token}` } };
+      const newName = editValues[idCategory];
       await axios.put(`${apiUrl}/ageCategories/${idCategory}`, { name: newName }, config);
-      setCategorias(categorias.map(c => c.idCategory === idCategory ? { ...c, name: newName } : c));
+      setCategorias(categorias.map(c =>
+        c.idCategory === idCategory ? { ...c, name: newName } : c
+      ));
       setEditingId(null);
     } catch (err) {
-      console.error('Erro ao atualizar categoria:', err);
+      console.error('Erro ao atualizar categoria:', err.response?.data || err.message);
     }
   };
 
@@ -112,8 +115,10 @@ const AgeCategoriesPage = () => {
                         {editingId === categoria.idCategory ? (
                           <input
                             type="text"
-                            value={newName}
-                            onChange={(e) => setNewName(e.target.value)}
+                            value={editValues[categoria.idCategory] || ""}
+                            onChange={(e) =>
+                              setEditValues(prev => ({ ...prev, [categoria.idCategory]: e.target.value }))
+                            }
                             className="form-control"
                           />
                         ) : (
