@@ -129,9 +129,9 @@ const deleteTeam = async (req, res) => {
 // 📌 Get Team by User ID
 const getTeamsByCoach = async (req, res) => {
     try {
-        const { userId } = req.params;
+        const { idUser } = req.params;
         const teams = await Team.findAll({
-            where: { userId },
+            where: { idUser },
             include: [
                 { model: AgeCategory, as: 'ageCategory' },
                 { model: TeamType, as: 'teamType' },
