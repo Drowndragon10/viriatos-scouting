@@ -26,43 +26,47 @@ const inviteUser = async (req, res) => {
     const { email, idUserType } = req.body;
 
     try {
+        // gerar link
         const inviteLink = generateInviteLink(email, idUserType);
 
-        res.status(200).json({
-            message: 'Invite generated successfully.',
-            inviteLink,
-        });
-        
-        const request = mailjet.post('send', { version: 'v3.1' }).request({
+        // enviar email
+        await mailjet.post('send', { version: 'v3.1' }).request({
             Messages: [
                 {
                     From: {
-                    Email: 'jetmailgoncalo@gmail.com',
-                    Name: 'Scouting App',
-                },
+                        Email: 'jetmailgoncalo@gmail.com', // remetente fixo
+                        Name: 'Scouting App',
+                    },
                     To: [
                         {
-                            Email: email,
+                            Email: email, // destinatário é o email do req.body
                             Name: 'User',
                         },
                     ],
                     Subject: 'Invitation to Scouting App',
                     HTMLPart: `
+                        <h2>You have been invited!</h2>
                         <p>Click the link below to create your account:</p>
-                        <a href="${inviteLink}">${inviteLink}</a>
+                        <p><a href="${inviteLink}" style="color: #1a73e8;">Accept Invitation</a></p>
+                        <p>This link will expire in 24 hours.</p>
                     `,
                 },
             ],
         });
-        await request;
+
+        // resposta ao frontend
+        res.status(200).json({
+            message: 'Invite sent successfully.',
+            inviteLink,
+        });
     } catch (error) {
         console.error('Error generating invite link:', error.message);
-        res.status(500).json({ error: 'Failed to generate invite link' });
+        res.status(500).json({ error: 'Failed to send invite.' });
     }
 };
 
 const createAccount = async (req, res) => {
-    const {name, password, inviteToken} = req.body;
+    const { name, password, inviteToken } = req.body;
 
     let decoded;
     try {
@@ -71,7 +75,7 @@ const createAccount = async (req, res) => {
         if (error.name === 'TokenExpiredError') {
             return res.status(400).json({ error: 'Token expired. Please request a new invite.' });
         }
-        return res.status(400).json({ error: 'Invalid token' });
+        return res.status(400).json({ error: 'Invalid token.' });
     }
 
     if (!decoded || !decoded.email || typeof decoded.idUserType !== 'number') {
@@ -88,15 +92,15 @@ const createAccount = async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = await User.create({
+        await User.create({
             name,
             email,
             password: hashedPassword,
             idUserType: userType,
-            accountStatus: 'Ativo',
+            accountStatus: 'Active',
         });
 
-        res.status(201).json({ message: 'Account created successfully' });
+        res.status(201).json({ message: 'Account created successfully.' });
     } catch (error) {
         if (error.name === 'SequelizeUniqueConstraintError') {
             return res.status(400).json({ error: 'The email is already registered.' });
