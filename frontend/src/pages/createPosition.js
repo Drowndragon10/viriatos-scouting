@@ -37,7 +37,7 @@ const CreatePosition = () => {
   };
 
   return (
-    <div className="d-flex" style={{ backgroundColor: "#2C2C2C", minHeight: "100vh" }}>
+    <div className="d-flex" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
       <Sidebar />
       <div className="container mt-4" style={{ maxWidth: '600px', padding: '20px' }}>
         <h2 className="text-white mb-4">Adicionar Posição</h2>
@@ -52,7 +52,7 @@ const CreatePosition = () => {
               required
               placeholder="Nome da Posição"
               className="form-control"
-              style={{ backgroundColor: '#121212', opacity:'0.4', border: 'none', color: 'white' }}
+              style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
             />
           </div>
 

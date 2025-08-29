@@ -98,10 +98,10 @@ const CreateMatch = () => {
   };
 
   return (
-    <div style={{ display: 'flex', backgroundColor: '#2C2C2C' }}>
+    <div style={{ display: 'flex', backgroundColor: '#121212' }}>
       <Sidebar />
       <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px', flex: 1 }}>
-        <div className="card mt-5" style={{ width: '100%', maxWidth: '600px', backgroundColor: '#2C2C2C', border: 'none' }}>
+        <div className="card mt-5" style={{ width: '100%', maxWidth: '600px', backgroundColor: '#121212', border: 'none' }}>
           <h2 className="card-title text-center mb-5" style={{ color: 'white' }}>Adicionar Jogo</h2>
 
           {message && <p style={{ color: 'lightgreen' }}>{message}</p>}
@@ -116,7 +116,7 @@ const CreateMatch = () => {
                 onChange={handleChange}
                 className="form-control"
                 required
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               />
             </div>
             <div className="mb-3">
@@ -128,7 +128,7 @@ const CreateMatch = () => {
                 className="form-control"
                 placeholder="Concelho"
                 required
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               />
             </div>
             <div className="mb-3">
@@ -140,7 +140,7 @@ const CreateMatch = () => {
                 className="form-control"
                 placeholder="Distrito"
                 required
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               />
             </div>
             <div className="mb-3">
@@ -149,7 +149,7 @@ const CreateMatch = () => {
                 value={matchData.homeTeam}
                 onChange={handleChange}
                 className="form-select"
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
                 required
               >
                 <option value="" disabled>Selecione a Equipa da Casa</option>
@@ -166,7 +166,7 @@ const CreateMatch = () => {
                 value={matchData.awayTeam}
                 onChange={handleChange}
                 className="form-select"
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
                 required
               >
                 <option value="" disabled>Selecione a Equipa Visitante</option>

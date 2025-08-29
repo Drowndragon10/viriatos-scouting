@@ -20,7 +20,7 @@ body {
 }
 
 .table-custom tbody tr {
-  background-color: #121212;
+  background-color: #2C2C2C;
   color: #fff;
 }
 
@@ -39,7 +39,6 @@ body {
   color: #fff;
   border: 1px solid #333;
 }
-
 
 h2{
   font-size: 1.7em !important;
@@ -69,7 +68,7 @@ span{
   font-size: 20px !important;
 }
 
-select, button, input{
+select, button, input, textarea{
   font-size: 14px !important;
 }
 
@@ -82,5 +81,11 @@ code {
   opacity: 1 !important; 
 }
 
+hr {
+  border: none !important;
+  border-top: 2px solid #FDD522 !important;
+  margin-bottom: 3rem !important;
+  opacity: 1 !important;
+}
 
 

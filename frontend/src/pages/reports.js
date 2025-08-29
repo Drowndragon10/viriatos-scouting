@@ -24,21 +24,20 @@ const RelatoriosSubmetidos = () => {
                 const config = { headers: { Authorization: `Bearer ${token}` } };
 
                 // Fetch reports conforme role
+                let response;
                 if (userRole === 1) {
-                    const response = await axios.get(`${apiUrl}/reports`, config);
-                    setRelatorios(response.data);
+                    response = await axios.get(`${apiUrl}/reports`, config);
                 } else if (userRole === 3) {
-                    const response = await axios.get(`${apiUrl}/reports/user/${userId}`, config);
-                    setRelatorios(response.data);
+                    response = await axios.get(`${apiUrl}/reports/user/${userId}`, config);
                 }
+                setRelatorios(response.data);
 
                 const usersResponse = await axios.get(`${apiUrl}/auth/users`, config);
-                setUtilizadores(usersResponse.data);
+                setUtilizadores(usersResponse.data.filter(u => u.idUserType === 3)); // só olheiros
             } catch (err) {
                 console.error("Erro ao buscar relatórios:", err);
             }
         };
-
         fetchRelatorios();
     }, [apiUrl, userRole, userId]);
 
@@ -54,6 +53,7 @@ const RelatoriosSubmetidos = () => {
         }
     };
 
+    // Filtros funcionando corretamente
     const relatoriosFiltrados = relatorios.filter(relatorio => {
         const atletaMatch = filtroAtleta ? relatorio.athlete?.name === filtroAtleta : true;
         const estadoMatch = filtroEstado ? relatorio.status === filtroEstado : true;
@@ -67,19 +67,20 @@ const RelatoriosSubmetidos = () => {
     );
 
     return (
-        <div style={{ display: "flex", backgroundColor: "#2C2C2C", height: "100vh", overflow: "hidden" }}>
+        <div style={{ display: "flex", backgroundColor: "#121212", height: "100vh", overflow: "hidden" }}>
             <Sidebar />
             <div className="mt-5" style={{ flex: 1, overflowY: 'auto' }}>
                 <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
-                    <h2 className="mb-5 text-white">
+                    <h2 className="mb-2 text-white">
                         {userRole === 1 ? "Relatórios Submetidos" : "Seus Relatórios Submetidos"}
                     </h2>
-
+<hr/>
                     {/* Filtros */}
                     <div className="d-flex justify-content-start mb-4 gap-3">
+                        {/* Atleta */}
                         <select
                             className="form-select"
-                            style={{ width: '200px', backgroundColor: '#121212', color: 'white', border: 'none' }}
+                            style={{ width: '200px', backgroundColor: '#2C2C2C', color: 'white', border: 'none' }}
                             value={filtroAtleta}
                             onChange={(e) => setFiltroAtleta(e.target.value)}
                         >
@@ -91,21 +92,23 @@ const RelatoriosSubmetidos = () => {
                                 ))}
                         </select>
 
+                        {/* Olheiro */}
                         <select
                             className="form-select"
-                            style={{ width: '200px', backgroundColor: '#121212', color: 'white', border: 'none' }}
+                            style={{ width: '200px', backgroundColor: '#2C2C2C', color: 'white', border: 'none' }}
                             value={filtroOlheiro}
                             onChange={(e) => setFiltroOlheiro(e.target.value)}
                         >
                             <option value="">Todos os Olheiros</option>
-                            {utilizadores.filter(u => u.role === "Olheiro").map(u => (
+                            {utilizadores.map(u => (
                                 <option key={u.idUser} value={u.idUser}>{u.name}</option>
                             ))}
                         </select>
 
+                        {/* Estado */}
                         <select
                             className="form-select"
-                            style={{ width: '200px', backgroundColor: '#121212', color: 'white', border: 'none' }}
+                            style={{ width: '200px', backgroundColor: '#2C2C2C', color: 'white', border: 'none' }}
                             value={filtroEstado}
                             onChange={(e) => setFiltroEstado(e.target.value)}
                         >
@@ -121,7 +124,7 @@ const RelatoriosSubmetidos = () => {
                         {relatoriosPaginados.length === 0 ? (
                             <p className="text-center text-white" style={{ fontSize: "18px" }}>Não foram encontrados relatórios.</p>
                         ) : (
-                            <table className="table table-bordered table-striped shadow-sm" style={{ backgroundColor: "#121212", color: "white" }}>
+                            <table className="table-custom" style={{ backgroundColor: "#2C2C2C", color: "white" }}>
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -146,7 +149,7 @@ const RelatoriosSubmetidos = () => {
                                                     <td>
                                                         <button
                                                             className="btn"
-                                                            style={{ backgroundColor: '#121212', width: '100px', border: 'none', color: 'white' }}
+                                                            style={{ backgroundColor: '#2C2C2C', width: '100px', border: 'none', color: 'white' }}
                                                             onClick={() => setExpandedReportId(expandedReportId === relatorio.idReport ? null : relatorio.idReport)}
                                                         >
                                                             Detalhes
@@ -180,10 +183,7 @@ const RelatoriosSubmetidos = () => {
                         <div className="d-flex justify-content-center align-items-center mt-3 text-white">
                             <span
                                 className="mx-3"
-                                style={{
-                                    cursor: currentPage > 1 ? "pointer" : "default",
-                                    opacity: currentPage > 1 ? 1 : 0.5,
-                                }}
+                                style={{ cursor: currentPage > 1 ? "pointer" : "default", opacity: currentPage > 1 ? 1 : 0.5 }}
                                 onClick={prevPage}
                             >
                                 &lt;
@@ -191,10 +191,7 @@ const RelatoriosSubmetidos = () => {
                             <span style={{ opacity: '0.8' }}>Página {currentPage}</span>
                             <span
                                 className="mx-3"
-                                style={{
-                                    cursor: currentPage < Math.ceil(relatorios.length / relatoriosPerPage) ? "pointer" : "default",
-                                    opacity: currentPage < Math.ceil(relatorios.length / relatoriosPerPage) ? 1 : 0.5,
-                                }}
+                                style={{ cursor: currentPage < Math.ceil(relatoriosFiltrados.length / relatoriosPerPage) ? "pointer" : "default", opacity: currentPage < Math.ceil(relatoriosFiltrados.length / relatoriosPerPage) ? 1 : 0.5 }}
                                 onClick={nextPage}
                             >
                                 &gt;

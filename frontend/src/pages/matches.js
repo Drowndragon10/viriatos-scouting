@@ -79,12 +79,12 @@ const Matches = () => {
   if (error) return <div className="text-center py-10 text-white">{error}</div>;
 
   return (
-    <div style={{ display: "flex", backgroundColor: "#2C2C2C", height: "100vh", overflow: "hidden" }}>
+    <div style={{ display: "flex", backgroundColor: "#121212", height: "100vh", overflow: "hidden" }}>
       <Sidebar />
       <div className="mt-5" style={{ flex: 1, overflowY: "auto" }}>
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2 className="mb-5 text-white">Jogos</h2>
-
+          <h2 className="mb-2 text-white">Jogos</h2>
+<hr/>
           <div className="d-flex justify-content-between mb-5">
             <div className="d-flex gap-3">
               <input
@@ -92,13 +92,13 @@ const Matches = () => {
                 value={dateFilter}
                 onChange={(e) => setDateFilter(e.target.value)}
                 className="form-control"
-                style={{ backgroundColor: "#121212", width: "200px", border: "none", color: "white" }}
+                style={{ backgroundColor: "#2C2C2C", width: "200px", border: "none", color: "white" }}
               />
               <select
                 value={ageCategoryFilter}
                 onChange={(e) => setAgeCategoryFilter(e.target.value)}
                 className="form-select"
-                style={{ backgroundColor: "#121212", width: "200px", border: "none", color: "white" }}
+                style={{ backgroundColor: "#2C2C2C", width: "200px", border: "none", color: "white" }}
               >
                 <option value="">Classificação Etária</option>
                 {ageCategories.map((cat) => (
@@ -113,7 +113,7 @@ const Matches = () => {
               <button
                 onClick={handleAdd}
                 className="btn"
-                style={{ backgroundColor: "#121212", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}
+                style={{ backgroundColor: "#2C2C2C", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}
               >
                 + Adicionar Jogo
               </button>
@@ -156,7 +156,6 @@ const Matches = () => {
                       {userRole === 1 && (
                         <td>
                           <FaEdit
-                            className="text-primary"
                             style={{ cursor: "pointer", marginRight: "1rem" }}
                             onClick={() => handleEdit(matchData.match.idMatch)}
                           />

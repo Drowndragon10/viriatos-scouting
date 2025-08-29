@@ -35,7 +35,7 @@ const CreateGuardian = () => {
   };
 
   return (
-    <div className="d-flex" style={{ backgroundColor: "#2C2C2C", minHeight: "100vh" }}>
+    <div className="d-flex" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
       <Sidebar />
 
       <div className="container mt-4" style={{ maxWidth: '600px', padding: '20px' }}>
@@ -50,7 +50,7 @@ const CreateGuardian = () => {
               required
               placeholder="Nome do Encarregado"
               className="form-control"
-              style={{ backgroundColor: '#121212', border: 'none', color: 'white' }}
+              style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
             />
           </div>
           <div style={{ marginBottom: '20px' }}>
@@ -62,7 +62,7 @@ const CreateGuardian = () => {
               required
               placeholder="Contacto do Encarregado"
               className="form-control"
-              style={{ backgroundColor: '#121212', border: 'none', color: 'white' }}
+              style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
             />
           </div>
           <div style={{ marginBottom: '20px' }}>
@@ -74,7 +74,7 @@ const CreateGuardian = () => {
               required
               placeholder="Email do Encarregado"
               className="form-control"
-              style={{ backgroundColor: '#121212', border: 'none', color: 'white' }}
+              style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
             />
           </div>
           <button

@@ -73,25 +73,25 @@ const PositionsPage = () => {
   if (error) return <div className="text-center py-10">{error}</div>;
 
   return (
-    <div style={{ display: "flex", backgroundColor: "#2C2C2C", height: "100vh", overflow: "hidden" }}>
+    <div style={{ display: "flex", backgroundColor: "#121212", height: "100vh", overflow: "hidden" }}>
       <Sidebar />
       <div className="mt-5" style={{ flex: 1, overflowY: 'auto' }}>
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2 className="mb-5 text-white">Posições</h2>
-
+          <h2 className="mb-2 text-white">Posições</h2>
+<hr/>
           <div className="d-flex justify-content-between mb-3">
             <input
               type="text"
               placeholder="Pesquisar por nome"
               className="form-control"
-              style={{ backgroundColor: '#121212', width: '300px', border: 'none', color: 'white' }}
+              style={{ backgroundColor: '#2C2C2C', width: '300px', border: 'none', color: 'white' }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button
               onClick={handleAdd}
               className="btn"
-              style={{ backgroundColor: "#121212", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}
+              style={{ backgroundColor: "#2C2C2C", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}
             >
               + Criar Posição
             </button>
@@ -145,7 +145,6 @@ const PositionsPage = () => {
                           </>
                         ) : (
                           <FaEdit
-                            className="text-primary"
                             style={{ cursor: "pointer", marginRight: "1rem" }}
                             onClick={() => handleEdit(posicao)}
                           />

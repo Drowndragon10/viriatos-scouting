@@ -15,12 +15,17 @@ import Matches from './pages/matches';
 import CreateMatch from './pages/createMatch';
 import Reports from './pages/reports';
 import Teams from './pages/teams';
+import Tasks from './pages/tasks';
+import AssignTask from './pages/assignTask';
+import Invite from './pages/invite';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/invite" element={<ProtectedRoute element={Invite} allowedRoles={[1]} />}
+        />
         <Route
           path="/dashboard"
           element={<ProtectedRoute element={DashboardAdmin} allowedRoles={[1]} />}
@@ -61,6 +66,12 @@ function App() {
         <Route
           path="/reports"
           element={<ProtectedRoute element={Reports} allowedRoles={[1, 3]} />} />
+        <Route
+          path="/tasks"
+          element={<ProtectedRoute element={Tasks} allowedRoles={[1]} />} />
+        <Route
+          path="/task/assign"
+          element={<ProtectedRoute element={AssignTask} allowedRoles={[1]} />} />
       </Routes>
     </Router>
   );

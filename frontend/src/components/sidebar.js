@@ -52,10 +52,10 @@ const Sidebar = () => {
             style={{
                 width: '250px',
                 transition: 'width 0.3s ease',
-                backgroundColor: '#121212',
-                boxShadow: '5px 0 10px rgba(0, 0, 0, 0.3)',
-                borderTopRightRadius: '20px',
-                borderBottomRightRadius: '20px',
+                backgroundColor: '#2C2C2C',
+                boxShadow: '10px 0 10px rgba(0, 0, 0, 0.15)',
+                borderTopRightRadius: '25px',
+                borderBottomRightRadius: '25px',
             }}
         >
             <div className="text-center py-3">
@@ -74,7 +74,7 @@ const Sidebar = () => {
                             onMouseEnter={() => setHoveredButton(item.path)}
                             onMouseLeave={() => setHoveredButton(null)}
                             style={{
-                                backgroundColor: hoveredButton === item.path ? '#333333' : '#121212',
+                                backgroundColor: hoveredButton === item.path ? '#FDD522' : '#2C2C2C',
                                 border: 'none',
                                 color: 'white',
                                 boxShadow: 'none',
@@ -99,7 +99,7 @@ const Sidebar = () => {
                     onMouseEnter={() => setHoveredButton('logout')}
                     onMouseLeave={() => setHoveredButton(null)}
                     style={{
-                        backgroundColor: hoveredButton === 'logout' ? '#333333' : '#121212',
+                        backgroundColor: hoveredButton === 'logout' ? '#FDD522' : '#2C2C2C',
                         border: 'none',
                         color: 'white',
                         boxShadow: 'none',

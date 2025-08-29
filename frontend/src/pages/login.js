@@ -23,7 +23,7 @@ const LoginPage = () => {
       if (userRole === 1) {
         navigate('/dashboard');
       } else if (userRole === 2) {
-        navigate('/equipas');
+        navigate('/teams');
       } else if (userRole === 3) {
         navigate('/minhastarefas');
       } else {
@@ -41,7 +41,7 @@ const LoginPage = () => {
   return (
     <div className="container-fluid p-0 d-flex min-vh-100">
       {/* Left Panel */}
-      <div className="col-lg-5 col-md-12 p-0" style={{ backgroundColor: '#121212' }}>
+      <div className="col-lg-5 col-md-12 p-0" style={{ backgroundColor: '#2C2C2C' }}>
         <div className="text-center text-light d-flex justify-content-center align-items-center min-vh-100">
           <div>
             <h1>
@@ -52,7 +52,7 @@ const LoginPage = () => {
       </div>
 
       {/* Right Panel */}
-      <div className="col-lg-7 col-md-12 d-flex justify-content-center align-items-center" style={{ backgroundColor: '#2a2a2a' }}>
+      <div className="col-lg-7 col-md-12 d-flex justify-content-center align-items-center" style={{ backgroundColor: '#121212' }}>
         <div
           className="login-form text-light p-4 w-100"
           style={{ maxWidth: '400px' }}
@@ -67,7 +67,7 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               />
             </div>
             <div className="mb-3">
@@ -78,7 +78,7 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               />
             </div>
             <button type="submit" className="btn btn-warning w-100 mt-3" style={{ color: 'white' }}>

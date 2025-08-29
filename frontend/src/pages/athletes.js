@@ -95,11 +95,12 @@ const AthletesPage = () => {
   if (error) return <div className="text-center py-10">{error}</div>;
 
   return (
-    <div style={{ display: "flex", backgroundColor: "#2C2C2C", height: "100vh", overflow: "hidden" }}>
+    <div style={{ display: "flex", backgroundColor: "#121212", height: "100vh", overflow: "hidden" }}>
       <Sidebar />
       <div className="mt-5" style={{ flex: 1, overflowY: 'auto' }}>
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2 className="mb-5 text-white">Atletas</h2>
+          <h2 className="mb-2 text-white">Atletas</h2>
+          <hr/> 
           {message && <p className="text-white mb-3">{message}</p>}
 
           <div className="d-flex justify-content-between mb-4">
@@ -110,14 +111,14 @@ const AthletesPage = () => {
                 onChange={handleSearchChange}
                 placeholder="Pesquisar por nome"
                 className="form-control"
-                style={{ backgroundColor: '#121212', width: '300px', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', width: '300px', border: 'none', color: 'white' }}
               />
-              <button onClick={toggleFilters} className="btn text-white" style={{ backgroundColor: '#121212', border: 'none' }}>
+              <button onClick={toggleFilters} className="btn text-white" style={{ backgroundColor: '#2C2C2C', border: 'none' }}>
                 Filtros ▾
               </button>
             </div>
             {isAdmin && (
-              <button onClick={handleAdd} className="btn" style={{ backgroundColor: "#121212", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}>
+              <button onClick={handleAdd} className="btn" style={{ backgroundColor: "#2C2C2C", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}>
                 + Adicionar Atleta
               </button>
             )}
@@ -132,7 +133,7 @@ const AthletesPage = () => {
                     value={filterPosition}
                     onChange={(e) => setFilterPosition(e.target.value)}
                     className="form-select"
-                    style={{ backgroundColor: '#121212', color: 'white', border: 'none', width: '180px' }}
+                    style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none', width: '180px' }}
                   >
                     <option value="">Todas as Posições</option>
                     {positions.map(p => <option key={p.idPosition} value={p.name}>{p.name}</option>)}
@@ -145,7 +146,7 @@ const AthletesPage = () => {
                     value={filterTeam}
                     onChange={(e) => setFilterTeam(e.target.value)}
                     className="form-select"
-                    style={{ backgroundColor: '#121212', color: 'white', border: 'none', width: '250px' }}
+                    style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none', width: '250px' }}
                   >
                     <option value="">Todas as Equipas</option>
                     {teams.map(t => <option key={t.idTeam} value={t.name}>{t.name}</option>)}
@@ -160,14 +161,14 @@ const AthletesPage = () => {
                     showYearPicker
                     dateFormat="yyyy"
                     placeholderText="Selecionar Ano"
-                    customInput={<input style={{ backgroundColor: '#121212', color: 'white', border: 'none', padding: '8px 12px', borderRadius: '5px', width: '200px' }} />}
+                    customInput={<input style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none', padding: '8px 12px', borderRadius: '5px', width: '200px' }} />}
                   />
                 </div>
               </div>
 
               <div className="d-flex gap-2">
-                <button onClick={handleFilterChange} className="btn" style={{ backgroundColor: '#2C2C2C', color: 'white' }}>Aplicar Filtros</button>
-                <button onClick={handleClearFilters} className="btn" style={{ backgroundColor: '#2C2C2C', color: 'white' }}>Limpar Filtros</button>
+                <button onClick={handleFilterChange} className="btn" style={{ backgroundColor: '#121212', color: 'white' }}>Aplicar Filtros</button>
+                <button onClick={handleClearFilters} className="btn" style={{ backgroundColor: '#121212', color: 'white' }}>Limpar Filtros</button>
               </div>
             </div>
           )}
@@ -196,7 +197,7 @@ const AthletesPage = () => {
                       <td>
                         {isAdmin && (
                           <>
-                            <FaEdit className="text-primary" style={{ cursor: "pointer", marginRight: "1rem" }} onClick={(e) => { e.stopPropagation(); handleEdit(a.idAthlete); }} />
+                            <FaEdit style={{ cursor: "pointer", marginRight: "1rem" }} onClick={(e) => { e.stopPropagation(); handleEdit(a.idAthlete); }} />
                             <FaTimes className="text-danger" style={{ cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); handleDelete(a.idAthlete); }} />
                           </>
                         )}

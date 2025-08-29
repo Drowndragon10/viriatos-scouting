@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/sidebar";
 import { getUserRoleFromToken, getUserIdFromToken } from "../components/jwtDecode";
-import { FaEdit, FaBan } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
@@ -102,12 +102,12 @@ const Teams = () => {
   if (error) return <div className="text-center py-10">{error}</div>;
 
   return (
-    <div style={{ display: "flex", backgroundColor: "#2C2C2C", height: "100vh", overflow: "hidden" }}>
+    <div style={{ display: "flex", backgroundColor: "#121212", height: "100vh", overflow: "hidden" }}>
       <Sidebar />
       <div className="mt-5" style={{ flex: 1, overflowY: "auto" }}>
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2 className="mb-5 text-white">Teams</h2>
-
+          <h2 className="mb-2 text-white">Equipas</h2>
+          <hr />
           {/* Filters and Add Button */}
           <div className="d-flex flex-wrap justify-content-between mb-4">
             <div className="d-flex flex-wrap gap-3">
@@ -117,14 +117,14 @@ const Teams = () => {
                 placeholder="Search by name"
                 value={nameFilter}
                 onChange={(e) => setNameFilter(e.target.value)}
-                style={{ backgroundColor: "#121212", width: "250px", border: "none", color: "white" }}
+                style={{ backgroundColor: "#2C2C2C", width: "250px", border: "none", color: "white" }}
               />
 
               <select
                 className="form-select"
                 value={ageCategoryFilter}
                 onChange={(e) => setAgeCategoryFilter(e.target.value)}
-                style={{ backgroundColor: "#121212", width: "200px", border: "none", color: "white" }}
+                style={{ backgroundColor: "#2C2C2C", width: "200px", border: "none", color: "white" }}
               >
                 <option value="">All Age Categories</option>
                 {ageCategories.map((category) => (
@@ -138,7 +138,7 @@ const Teams = () => {
                 className="form-select"
                 value={teamTypeFilter}
                 onChange={(e) => setTeamTypeFilter(e.target.value)}
-                style={{ backgroundColor: "#121212", width: "200px", border: "none", color: "white" }}
+                style={{ backgroundColor: "#2C2C2C", width: "200px", border: "none", color: "white" }}
               >
                 <option value="">All Team Types</option>
                 {teamTypes.map((type) => (
@@ -154,7 +154,7 @@ const Teams = () => {
                 onClick={handleAdd}
                 className="btn"
                 style={{
-                  backgroundColor: "#121212",
+                  backgroundColor: "#2C2C2C",
                   color: "#ffffff",
                   borderRadius: "10px",
                   padding: "7px 20px",
@@ -199,26 +199,18 @@ const Teams = () => {
                         {userRole === 1 && (
                           <>
                             <FaEdit
-                              className="text-primary"
                               style={{ cursor: "pointer", marginRight: "1rem" }}
                               onClick={() => handleEdit(team.idTeam)}
                               title="Editar Equipa"
                             />
-                            <FaBan
+                            {/* Ícone para eliminar a equipa */}
+                            <FaTrash
                               className="text-danger"
                               style={{ cursor: "pointer" }}
                               onClick={() => handleDelete(team.idTeam)}
                               title="Eliminar Equipa"
                             />
                           </>
-                        )}
-                        {userRole === 2 && (
-                          <button
-                            className="btn btn-sm btn-secondary"
-                            onClick={() => navigate(`/roster/${team.idTeam}`)}
-                          >
-                            Roster
-                          </button>
                         )}
                       </td>
                     </tr>

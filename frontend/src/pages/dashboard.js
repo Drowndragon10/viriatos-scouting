@@ -140,11 +140,12 @@ const DashboardAdmin = () => {
   };
 
   return (
-    <div style={{ display: "flex", backgroundColor: "#2C2C2C", height: "100vh", overflow: "hidden" }}>
+    <div style={{ display: "flex", backgroundColor: "#121212", height: "100vh", overflow: "hidden" }}>
       <Sidebar />
       <div className="mt-5" style={{ flex: 1, overflowY: 'auto' }}>
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2 className="mb-5 text-white">Administração</h2>
+          <h2 className="mb-2 text-white">Administração</h2>
+          <hr/>
           <div className="d-flex justify-content-between mb-4">
             <div className="d-flex gap-3">
               <input
@@ -153,13 +154,13 @@ const DashboardAdmin = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="form-control"
-                style={{ backgroundColor: "#121212", width: "300px", border: "none", color: "white" }}
+                style={{ backgroundColor: "#2C2C2C", width: "300px", border: "none", color: "white" }}
               />
               <select
                 value={filterRole}
                 onChange={(e) => setFilterRole(e.target.value)}
                 className="form-select"
-                style={{ backgroundColor: "#121212", width: "180px", border: "none", color: "white" }}
+                style={{ backgroundColor: "#2C2C2C", width: "180px", border: "none", color: "white" }}
               >
                 <option value="">Todas Permissões</option>
                 {types.map((type) => (
@@ -172,7 +173,7 @@ const DashboardAdmin = () => {
                 value={filterState}
                 onChange={(e) => setFilterState(e.target.value)}
                 className="form-select"
-                style={{ backgroundColor: "#121212", width: "180px", border: "none", color: "white" }}
+                style={{ backgroundColor: "#2C2C2C", width: "180px", border: "none", color: "white" }}
               >
                 <option value="">Todos Estados</option>
                 <option value="Ativo">Ativo</option>
@@ -181,8 +182,8 @@ const DashboardAdmin = () => {
             </div>
             <button
               className="btn"
-              onClick={() => navigate("/convidar")}
-              style={{ backgroundColor: "#121212", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}
+              onClick={() => navigate("/invite")}
+              style={{ backgroundColor: "#2C2C2C", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}
             >
               + Convidar Utilizador
             </button>
@@ -241,7 +242,6 @@ const DashboardAdmin = () => {
                             </>
                           ) : (
                             <FaEdit
-                              className="text-primary"
                               style={{ cursor: "pointer", marginRight: "1rem" }}
                               onClick={() => {
                                 setEditingUserId(user.idUser);

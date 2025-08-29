@@ -77,10 +77,10 @@ const AddTeam = () => {
   };
 
   return (
-    <div style={{ display: 'flex', backgroundColor: '#2C2C2C' }}>
+    <div style={{ display: 'flex', backgroundColor: '#121212' }}>
       <Sidebar />
       <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px', flex: 1 }}>
-        <div className="card mt-5" style={{ width: '100%', maxWidth: '600px', backgroundColor: '#2C2C2C', border: 'none' }}>
+        <div className="card mt-5" style={{ width: '100%', maxWidth: '600px', backgroundColor: '#121212', border: 'none' }}>
           <h2 className="card-title text-center mb-5" style={{ color: 'white' }}>Add Team</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -91,7 +91,7 @@ const AddTeam = () => {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Team Name"
                 required
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', opacity: '1', border: 'none', color: 'white' }}
               />
             </div>
             <div className="mb-3">
@@ -100,7 +100,7 @@ const AddTeam = () => {
                 value={idAgeCategory}
                 onChange={(e) => setIdAgeCategory(e.target.value)}
                 required
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               >
                 <option value="">Select Age Category</option>
                 {ageCategories.map(cat => (
@@ -114,7 +114,7 @@ const AddTeam = () => {
                 value={idTeamType}
                 onChange={(e) => setIdTeamType(e.target.value)}
                 required
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               >
                 <option value="">Select Team Type</option>
                 {teamTypes.map(type => (
@@ -128,7 +128,7 @@ const AddTeam = () => {
                 value={idUser}
                 onChange={(e) => setIdUser(e.target.value)}
                 required
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               >
                 <option value="">Select Trainer</option>
                 {users.map(user => (
@@ -143,7 +143,7 @@ const AddTeam = () => {
                 value={county}
                 onChange={(e) => setCounty(e.target.value)}
                 placeholder="County"
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               />
             </div>
             <div className="mb-3">
@@ -153,7 +153,7 @@ const AddTeam = () => {
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
                 placeholder="District"
-                style={{ backgroundColor: '#121212', opacity: '0.4', border: 'none', color: 'white' }}
+                style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               />
             </div>
             <div className="d-grid gap-2">

@@ -1,4 +1,4 @@
-const Report = require('../models/report'); 
+const Report = require('../models/report');
 const Athlete = require('../models/athlete');
 const User = require('../models/user');
 
@@ -82,7 +82,7 @@ const getReportsByUserId = async (req, res) => {
     try {
         const reports = await Report.findAll({
             where: {
-                '$user.idUser$': idUser  
+                '$user.idUser$': idUser
             },
             include: [
                 { model: Athlete, as: 'athlete' },

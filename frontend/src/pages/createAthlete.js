@@ -86,14 +86,14 @@ const CreateAthlete = () => {
     };
 
     return (
-        <div className="d-flex" style={{ backgroundColor: "#2C2C2C", minHeight: "100vh" }}>
+        <div className="d-flex" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
             <Sidebar />
             <div className="container mt-4" style={{ maxWidth: '600px', padding: '20px' }}>
                 <h2 className="text-white mb-4">Adicionar Novo Atleta</h2>
                 <form onSubmit={handleAddAtleta}>
                     <input type="text" value={name} onChange={e => setName(e.target.value)}
                         placeholder="Nome do Atleta" required
-                        className="form-control mb-3" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }} />
+                        className="form-control mb-3" style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none' }} />
 
                     <DatePicker
                         selected={birthDate}
@@ -105,7 +105,7 @@ const CreateAthlete = () => {
                         customInput={
                             <input
                                 style={{
-                                    backgroundColor: '#121212',
+                                    backgroundColor: '#2C2C2C',
                                     color: 'white',
                                     border: 'none',
                                 }}
@@ -116,20 +116,20 @@ const CreateAthlete = () => {
 
                     <input type="text" value={nationality} onChange={e => setNationality(e.target.value)}
                         placeholder="Nacionalidade" required
-                        className="form-control mb-3" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }} />
+                        className="form-control mb-3" style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none' }} />
 
                     <input type="text" value={birthplace} onChange={e => setBirthplace(e.target.value)}
                         placeholder="Naturalidade" required
-                        className="form-control mb-3" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }} />
+                        className="form-control mb-3" style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none' }} />
 
                     <select value={idPosition} onChange={e => setIdPosition(e.target.value)}
-                        className="form-select mb-3" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }}>
+                        className="form-select mb-3" style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none' }}>
                         <option value="">Selecione uma posição</option>
                         {positions.map(pos => <option key={pos.idPosition} value={pos.idPosition}>{pos.name || pos.nome}</option>)}
                     </select>
 
                     <select value={idGuardian} onChange={e => setIdGuardian(e.target.value)}
-                        className="form-select mb-2" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }}>
+                        className="form-select mb-2" style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none' }}>
                         <option value="">Selecione um encarregado</option>
                         {guardians.map(g => (
                             <option key={g.idGuardian} value={g.idGuardian}>
@@ -148,14 +148,14 @@ const CreateAthlete = () => {
                     </div>
 
                     <select value={idTeam} onChange={e => setIdTeam(e.target.value)}
-                        className="form-select mb-3" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }}>
+                        className="form-select mb-3" style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none' }}>
                         <option value="">Selecione uma equipa</option>
                         {teams.map(t => <option key={t.idTeam} value={t.idTeam}>{t.name || t.nome}</option>)}
                     </select>
 
                     <input type="text" value={link} onChange={e => setLink(e.target.value)}
                         placeholder="Link (opcional)"
-                        className="form-control mb-3" style={{ backgroundColor: '#121212', color: 'white', border: 'none' }} />
+                        className="form-control mb-3" style={{ backgroundColor: '#2C2C2C', color: 'white', border: 'none' }} />
 
                     <button type="submit" className="btn btn-primary w-100">
                         Adicionar Atleta
