@@ -2,27 +2,23 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar from '../components/sidebar';
 import { useNavigate } from 'react-router-dom';
-import { FaEdit, FaTimes } from 'react-icons/fa';
-
-const apiRequest = async (method, endpoint, data = null) => {
-  const apiUrl = process.env.REACT_APP_BACKEND_URL;
-  const token = localStorage.getItem('authToken');
-  const config = { headers: { Authorization: `Bearer ${token}` } };
-  return method === 'get'
-    ? axios.get(`${apiUrl}${endpoint}`, config)
-    : axios({ method, url: `${apiUrl}${endpoint}`, data, ...config });
-};
+import { FaEdit, FaTimes, FaCheck } from 'react-icons/fa';
 
 const AgeCategoriesPage = () => {
   const [categorias, setCategorias] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [newName, setNewName] = useState('');
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await apiRequest('get', '/ageCategories');
+        const token = localStorage.getItem('authToken');
+        const config = { headers: { Authorization: `Bearer ${token}` } };
+        const response = await axios.get(`${apiUrl}/ageCategories`, config);
         setCategorias(response.data);
       } catch (err) {
         setError('Erro ao carregar as categorias etárias.');
@@ -30,17 +26,36 @@ const AgeCategoriesPage = () => {
       }
     };
     fetchCategorias();
-  }, []);
+  }, [apiUrl]);
 
   const handleAdd = () => navigate('/ageCategorie/create');
-  const handleEdit = (idAgeCategory) => navigate(`/editarcategoria/${idAgeCategory}`);
-  const handleDelete = async (idAgeCategory) => {
+
+  const handleDelete = async (idCategory) => {
     if (!window.confirm('Tem certeza que deseja excluir esta categoria?')) return;
     try {
-      await apiRequest('delete', `/ageCategories/${idAgeCategory}`);
-      setCategorias(categorias.filter(c => c.idAgeCategory !== idAgeCategory));
+      const token = localStorage.getItem('authToken');
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+      await axios.delete(`${apiUrl}/ageCategories/${idCategory}`, config);
+      setCategorias(categorias.filter(c => c.idCategory !== idCategory));
     } catch (err) {
       console.error('Erro ao apagar categoria:', err);
+    }
+  };
+
+  const handleEdit = (categoria) => {
+    setEditingId(categoria.idCategory);
+    setNewName(categoria.name);
+  };
+
+  const saveEdit = async (idCategory) => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+      await axios.put(`${apiUrl}/ageCategories/${idCategory}`, { name: newName }, config);
+      setCategorias(categorias.map(c => c.idCategory === idCategory ? { ...c, name: newName } : c));
+      setEditingId(null);
+    } catch (err) {
+      console.error('Erro ao atualizar categoria:', err);
     }
   };
 
@@ -56,7 +71,7 @@ const AgeCategoriesPage = () => {
       <div className="mt-5" style={{ flex: 1, overflowY: 'auto' }}>
         <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 className="mb-2 text-white">Categorias Etárias</h2>
-<hr/>
+          <hr />
           <div className="d-flex justify-content-between mb-4">
             <input
               type="text"
@@ -92,17 +107,43 @@ const AgeCategoriesPage = () => {
                   </tr>
                 ) : (
                   filteredCategorias.map(categoria => (
-                    <tr key={categoria.idAgeCategory} style={{ backgroundColor: '#2C2C2C', color: '#fff' }}>
-                      <td>{categoria.name}</td>
+                    <tr key={categoria.idCategory} style={{ backgroundColor: '#2C2C2C', color: '#fff' }}>
                       <td>
-                        <FaEdit
-                          style={{ cursor: 'pointer', marginRight: '1rem' }}
-                          onClick={() => handleEdit(categoria.idAgeCategory)}
-                        />
+                        {editingId === categoria.idCategory ? (
+                          <input
+                            type="text"
+                            value={newName}
+                            onChange={(e) => setNewName(e.target.value)}
+                            className="form-control"
+                          />
+                        ) : (
+                          categoria.name
+                        )}
+                      </td>
+                      <td>
+                        {editingId === categoria.idCategory ? (
+                          <>
+                            <FaCheck
+                              className="text-success"
+                              style={{ cursor: 'pointer', marginRight: '1rem' }}
+                              onClick={() => saveEdit(categoria.idCategory)}
+                            />
+                            <FaTimes
+                              className="text-warning"
+                              style={{ cursor: 'pointer', marginRight: '1rem' }}
+                              onClick={() => setEditingId(null)}
+                            />
+                          </>
+                        ) : (
+                          <FaEdit
+                            style={{ cursor: 'pointer', marginRight: '1rem' }}
+                            onClick={() => handleEdit(categoria)}
+                          />
+                        )}
                         <FaTimes
                           className="text-danger"
                           style={{ cursor: 'pointer' }}
-                          onClick={() => handleDelete(categoria.idAgeCategory)}
+                          onClick={() => handleDelete(categoria.idCategory)}
                         />
                       </td>
                     </tr>
