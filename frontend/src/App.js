@@ -11,8 +11,11 @@ import CreatePositions from './pages/createPosition';
 import Athletes from './pages/athletes';
 import CreateAthlete from './pages/createAthlete';
 import CreateGuardian from './pages/createGuardian';
-
+import Matches from './pages/matches';
+import CreateMatch from './pages/createMatch';
+import Reports from './pages/reports';
 import Teams from './pages/teams';
+
 function App() {
   return (
     <Router>
@@ -46,9 +49,18 @@ function App() {
         <Route
           path="/athlete/create"
           element={<ProtectedRoute element={CreateAthlete} allowedRoles={[1]} />} />
-          <Route
+        <Route
           path="/guardian/create"
           element={<ProtectedRoute element={CreateGuardian} allowedRoles={[1]} />} />
+        <Route
+          path="/matches"
+          element={<ProtectedRoute element={Matches} allowedRoles={[1, 2, 3]} />} />
+        <Route
+          path="/match/create"
+          element={<ProtectedRoute element={CreateMatch} allowedRoles={[1]} />} />
+        <Route
+          path="/reports"
+          element={<ProtectedRoute element={Reports} allowedRoles={[1, 3]} />} />
       </Routes>
     </Router>
   );
