@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const UserType = require('../models/userType');
+const Mailjet = require('node-mailjet');
+
+const mailjet = new Mailjet({
+    apiKey: process.env.MJ_APIKEY_PUBLIC,
+    apiSecret: process.env.MJ_APIKEY_PRIVATE,
+});
 
 const router = express.Router();
 
@@ -22,19 +28,16 @@ const inviteUser = async (req, res) => {
     try {
         const inviteLink = generateInviteLink(email, idUserType);
 
-        // 👉 por enquanto só retornamos o link
         res.status(200).json({
             message: 'Invite generated successfully.',
             inviteLink,
         });
-
-        // 🔹 Quando quiseres reativar o email:
-        /*
+        
         const request = mailjet.post('send', { version: 'v3.1' }).request({
             Messages: [
                 {
                     From: {
-                        Email: email, // usa o email do req.body
+                        Email: email, 
                         Name: 'Convite App Scouting',
                     },
                     To: [
@@ -43,7 +46,7 @@ const inviteUser = async (req, res) => {
                             Name: 'User',
                         },
                     ],
-                    Subject: 'Invitation to Viriatus Scouting',
+                    Subject: 'Invitation to Scouting App',
                     HTMLPart: `
                         <p>Click the link below to create your account:</p>
                         <a href="${inviteLink}">${inviteLink}</a>
@@ -52,7 +55,6 @@ const inviteUser = async (req, res) => {
             ],
         });
         await request;
-        */
     } catch (error) {
         console.error('Error generating invite link:', error.message);
         res.status(500).json({ error: 'Failed to generate invite link' });

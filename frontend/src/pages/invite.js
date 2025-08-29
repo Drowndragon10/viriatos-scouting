@@ -42,7 +42,7 @@ const PaginaConvidar = () => {
     };
 
     try {
-      await fetch(`${apiUrl}/auth/convidar`, {
+      await fetch(`${apiUrl}/auth/invite`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
