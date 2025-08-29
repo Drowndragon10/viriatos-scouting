@@ -55,7 +55,7 @@ const getTeamById = async (req, res) => {
 // 📌 Create Team
 const createTeam = async (req, res) => {
     const { name, county, district, idAgeCategory, idTeamType, idUser } = req.body;
-    
+
     try {
         if (!name || !idAgeCategory || !idTeamType || !idUser) {
             return res.status(400).json({ message: 'All required fields must be filled.' });
@@ -129,9 +129,18 @@ const deleteTeam = async (req, res) => {
 // 📌 Get Team by User ID
 const getTeamsByCoach = async (req, res) => {
     try {
+        // Debug do parâmetro recebido
+        console.log('DEBUG req.params:', req.params);
+
         const { idUser } = req.params;
+        console.log('DEBUG idUser:', idUser);
+
+        // Debug do where usado no Sequelize
+        const whereClause = { idUser: idUser };
+        console.log('DEBUG whereClause:', whereClause);
+
         const teams = await Team.findAll({
-            where: { idUser },
+            where: whereClause,
             include: [
                 { model: AgeCategory, as: 'ageCategory' },
                 { model: TeamType, as: 'teamType' },
@@ -139,12 +148,17 @@ const getTeamsByCoach = async (req, res) => {
             ],
         });
 
+        // Debug do resultado do Sequelize
+        console.log('DEBUG teams:', teams);
+
         if (teams.length === 0) {
+            console.log('DEBUG: No team found for this user.');
             return res.status(404).json({ message: 'No team found for this user.' });
         }
 
         return res.json(teams);
     } catch (error) {
+        console.log('DEBUG error:', error);
         return res.status(400).json({ error: error.message });
     }
 };
