@@ -15,6 +15,7 @@ import Matches from './pages/matches';
 import CreateMatch from './pages/createMatch';
 import Reports from './pages/reports';
 import Teams from './pages/teams';
+import EditTeam from './pages/editTeam';
 import Tasks from './pages/tasks';
 import AssignTask from './pages/assignTask';
 import Invite from './pages/invite';
@@ -36,6 +37,9 @@ function App() {
         <Route
           path="/team/create"
           element={<ProtectedRoute element={CreateTeam} allowedRoles={[1]} />} />
+          <Route
+          path="/team/edit/:idTeam"
+          element={<ProtectedRoute element={EditTeam} allowedRoles={[1]} />} />
         <Route
           path="/ageCategories"
           element={<ProtectedRoute element={AgeCategories} allowedRoles={[1]} />} />
