@@ -38,17 +38,18 @@ const createAgeCategory = async (req, res) => {
 // Update age category
 const updateAgeCategory = async (req, res) => {
     try {
-        const { idAgeCategory } = req.params;
-        const { name } = req.body;
-        const category = await AgeCategory.findByPk(idAgeCategory);
+        const id = req.params.idAgeCategory;
+        const category = await AgeCategory.findByPk(id);
+
         if (!category) {
-            return res.status(404).json({ message: 'Age category not found.' });
+            return res.status(404).json({ message: "Categoria não encontrada" });
         }
-        category.name = name;
-        await category.save();
-        res.status(200).json(category);
-    } catch (error) {
-        res.status(500).json({ message: 'Error updating age category.', error });
+
+        await category.update({ name: req.body.name });
+        res.json(category);
+    } catch (err) {
+        console.error("Erro ao atualizar categoria:", err);
+        res.status(500).json({ message: "Erro ao atualizar categoria" });
     }
 };
 

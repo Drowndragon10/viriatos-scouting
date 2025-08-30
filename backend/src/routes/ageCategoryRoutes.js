@@ -10,9 +10,9 @@ const {
 const router = express.Router();
 
 router.get("/", getAllAgeCategories);
-router.get("/:idCategory", getAgeCategoryById);
+router.get("/:idAgeCategory", getAgeCategoryById);
 router.post("/", createAgeCategory);
-router.put("/:idCategory", updateAgeCategory);
-router.delete("/:idCategory", deleteAgeCategory);
+router.put("/:idAgeCategory", updateAgeCategory);
+router.delete("/:idAgeCategory", deleteAgeCategory);
 
 module.exports = router;
