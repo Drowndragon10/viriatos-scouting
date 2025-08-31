@@ -13,7 +13,7 @@ const HomePage = () => {
       <nav style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '30px 0 10px 0' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
           <img src={logo} alt="Logo" style={{ width: 70, height: 70, objectFit: 'contain' }} />
-          <span style={{ color: 'white', fontWeight: 700, fontSize: 32, letterSpacing: 1 }}>Viriatos</span>
+          <span style={{ color: 'white', fontWeight: 700, fontSize: 32, letterSpacing: 1 }}>Viriatos Scouting</span>
         </div>
         <button
           onClick={() => navigate('/login')}
