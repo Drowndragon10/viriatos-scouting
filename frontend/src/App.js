@@ -25,11 +25,13 @@ import EditMatch from './pages/editMatch';
 import MyTasks from './pages/myTasks.js'
 import MyReports from './pages/myReports.js';
 import CreateReport from './pages/createReport.js';
+import Home from './pages/home.js';
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/invite" element={<ProtectedRoute element={Invite} allowedRoles={[1]} />} />
         <Route path="/invite/:token" element={<InviteRegister />} />
