@@ -43,12 +43,6 @@ const InviteRegister = () => {
       <div className="col-lg-5 col-md-12 p-0" style={{ backgroundColor: '#121212' }}>
         <div className="text-center text-light d-flex justify-content-center align-items-center min-vh-100">
           <div>
-            <img
-              src={LogoAcademico}
-              alt="Viriatos Scouting Logo"
-              className="img-fluid mb-3"
-              style={{ maxWidth: '250px' }}
-            />
             <h1>
               Viriatos <span className="text-warning scouting">Scouting</span>
             </h1>

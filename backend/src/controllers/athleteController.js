@@ -57,9 +57,9 @@ const getAthletesByTeam = async (req, res) => {
 
 // Get athlete by ID
 const getAthleteById = async (req, res) => {
-    const { id } = req.params;
+    const { idAthlete } = req.params;
     try {
-        const athlete = await Athlete.findByPk(id, {
+        const athlete = await Athlete.findByPk(idAthlete, {
             include: [
                 { model: Position, as: 'position' },
                 { model: Guardian, as: 'guardian' },

@@ -85,7 +85,7 @@ const Matches = () => {
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <h2 className="mb-2 text-white">Jogos</h2>
 <hr/>
-          <div className="d-flex justify-content-between mb-5">
+          <div className="d-flex justify-content-between mb-3">
             <div className="d-flex gap-3">
               <input
                 type="date"

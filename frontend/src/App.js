@@ -9,6 +9,7 @@ import CreateAgeCategories from './pages/createAgeCategories';
 import Positions from './pages/positions';
 import CreatePositions from './pages/createPosition';
 import Athletes from './pages/athletes';
+import EditAthlete from './pages/editAthlete';
 import CreateAthlete from './pages/createAthlete';
 import CreateGuardian from './pages/createGuardian';
 import Matches from './pages/matches';
@@ -19,14 +20,15 @@ import EditTeam from './pages/editTeam';
 import Tasks from './pages/tasks';
 import AssignTask from './pages/assignTask';
 import Invite from './pages/invite';
+import InviteRegister from './pages/inviteRegister';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/invite" element={<ProtectedRoute element={Invite} allowedRoles={[1]} />}
-        />
+        <Route path="/invite" element={<ProtectedRoute element={Invite} allowedRoles={[1]} />} />
+        <Route path="/invite/:token" element={<InviteRegister />} />
         <Route
           path="/dashboard"
           element={<ProtectedRoute element={DashboardAdmin} allowedRoles={[1]} />}
@@ -55,6 +57,9 @@ function App() {
         <Route
           path="/athletes"
           element={<ProtectedRoute element={Athletes} allowedRoles={[1, 2, 3]} />} />
+          <Route
+          path="/athlete/edit/:idAthlete"
+          element={<ProtectedRoute element={EditAthlete} allowedRoles={[1]} />} />
         <Route
           path="/athlete/create"
           element={<ProtectedRoute element={CreateAthlete} allowedRoles={[1]} />} />

@@ -52,7 +52,7 @@ const AthletesPage = () => {
   }, [apiUrl]);
 
   const handleAdd = () => navigate("/athlete/create");
-  const handleEdit = (idAthlete) => navigate(`/edit-athlete/${idAthlete}`);
+  const handleEdit = (idAthlete) => navigate(`/athlete/edit/${idAthlete}`);
   const handleDelete = async (idAthlete) => {
     if (!window.confirm("Tem certeza que deseja excluir este atleta?")) {
       setMessage('A exclusão foi cancelada.');
