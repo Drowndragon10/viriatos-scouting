@@ -19,7 +19,7 @@ const generateInviteLink = (email, idUserType) => {
         { expiresIn: '24h' }
     );
 
-    return `${process.env.FRONTEND_URL}/inviteRegister/${token}`;
+    return `${process.env.FRONTEND_URL}/register/${token}`;
 };
 
 const inviteUser = async (req, res) => {
@@ -97,7 +97,6 @@ const createAccount = async (req, res) => {
             email,
             password: hashedPassword,
             idUserType: userType,
-            accountStatus: 'Active',
         });
 
         res.status(201).json({ message: 'Account created successfully.' });

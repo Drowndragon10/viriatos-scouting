@@ -61,7 +61,6 @@ const AgeCategoriesPage = () => {
     }
   };
 
-  // 🔹 Apagar categoria
   const deleteCategoria = async (id) => {
     try {
       const api = axios.create({
