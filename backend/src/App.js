@@ -22,11 +22,15 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'https://pi4-wheat.vercel.app',
+    origin: [
+      'https://pi4-wheat.vercel.app',
+      'http://localhost:3000'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
 );
+
 
 app.use(express.json());
 
