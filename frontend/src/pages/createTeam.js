@@ -89,7 +89,7 @@ const AddTeam = () => {
                 className="form-control"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Team Name"
+                placeholder="Nome da Equipa"
                 required
                 style={{ backgroundColor: '#2C2C2C', opacity: '1', border: 'none', color: 'white' }}
               />
@@ -102,7 +102,7 @@ const AddTeam = () => {
                 required
                 style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               >
-                <option value="">Select Age Category</option>
+                <option value="">Selecione a Categoria Etária</option>
                 {ageCategories.map(cat => (
                   <option key={cat.idAgeCategory} value={cat.idAgeCategory}>{cat.name}</option>
                 ))}
@@ -116,7 +116,7 @@ const AddTeam = () => {
                 required
                 style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               >
-                <option value="">Select Team Type</option>
+                <option value="">Selecione o Tipo de Equipa</option>
                 {teamTypes.map(type => (
                   <option key={type.idTeamType} value={type.idTeamType}>{type.name}</option>
                 ))}
@@ -130,7 +130,7 @@ const AddTeam = () => {
                 required
                 style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               >
-                <option value="">Select Trainer</option>
+                <option value="">Selecione o Treinador</option>
                 {users.map(user => (
                   <option key={user.idUser} value={user.idUser}>{user.name}</option>
                 ))}
@@ -142,7 +142,7 @@ const AddTeam = () => {
                 className="form-control"
                 value={county}
                 onChange={(e) => setCounty(e.target.value)}
-                placeholder="County"
+                placeholder="Concelho"
                 style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               />
             </div>
@@ -152,7 +152,7 @@ const AddTeam = () => {
                 className="form-control"
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                placeholder="District"
+                placeholder="Distrito"
                 style={{ backgroundColor: '#2C2C2C', border: 'none', color: 'white' }}
               />
             </div>
@@ -163,7 +163,7 @@ const AddTeam = () => {
                 style={{ backgroundColor: 'black', color: 'white' }}
                 disabled={isLoading}
               >
-                {isLoading ? 'Adding...' : 'Add Team'}
+                {isLoading ? 'A adicionar...' : 'Adicionar Equipa'}
               </button>
             </div>
           </form>
