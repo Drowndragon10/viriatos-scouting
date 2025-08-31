@@ -203,6 +203,7 @@ const HomePage = () => {
               marginTop: 10,
               textAlign: isMobile ? 'center' : 'right',
               width: isMobile ? '100%' : 380,
+              marginBottom: isMobile ? 0 : 10,
             }}
           >
             Veja e avalie jogadores de forma fácil e rápida.
