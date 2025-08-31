@@ -19,7 +19,7 @@ const generateInviteLink = (email, idUserType) => {
         { expiresIn: '24h' }
     );
 
-    return `${process.env.FRONTEND_URL}/register/${token}`;
+    return `${process.env.FRONTEND_URL}/register?token=${token}`;
 };
 
 const inviteUser = async (req, res) => {

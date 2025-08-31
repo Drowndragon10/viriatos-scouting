@@ -34,7 +34,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/invite" element={<ProtectedRoute element={Invite} allowedRoles={[1]} />} />
-        <Route path="/register/:token" element={<InviteRegister />} />
+        <Route path="/register" element={<InviteRegister />} />
+
         <Route
           path="/dashboard"
           element={<ProtectedRoute element={DashboardAdmin} allowedRoles={[1]} />}

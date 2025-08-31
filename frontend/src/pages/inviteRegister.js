@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 const InviteRegister = () => {
@@ -10,7 +10,8 @@ const InviteRegister = () => {
   const [success, setSuccess] = useState('');
   const apiUrl = process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
-  const { token } = useParams();
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
 
   const handleRegister = async (e) => {
     e.preventDefault();
