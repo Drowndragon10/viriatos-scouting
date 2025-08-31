@@ -52,7 +52,7 @@ function App() {
           path="/ageCategories"
           element={<ProtectedRoute element={AgeCategories} allowedRoles={[1]} />} />
         <Route
-          path="/ageCategorie/create"
+          path="/ageCategory/create"
           element={<ProtectedRoute element={CreateAgeCategories} allowedRoles={[1]} />} />
         <Route
           path="/positions"
