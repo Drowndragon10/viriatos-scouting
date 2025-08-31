@@ -33,8 +33,8 @@ const getTeams = async (req, res) => {
 // 📌 Get Team by ID
 const getTeamById = async (req, res) => {
     try {
-        const { teamId } = req.params;
-        const team = await Team.findByPk(teamId, {
+        const { idTeam } = req.params;
+        const team = await Team.findByPk(idTeam, {
             include: [
                 { model: AgeCategory, as: 'ageCategory' },
                 { model: TeamType, as: 'teamType' },

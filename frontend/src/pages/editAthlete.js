@@ -100,7 +100,7 @@ const EditAthlete = () => {
     <div style={{ display: "flex", backgroundColor: "#121212", minHeight: "100vh" }}>
       <Sidebar />
       <div style={{ flex: 1, padding: "20px" }}>
-        <div className="card" style={{ maxWidth: "600px", margin: "0 auto", background: "#2C2C2C", border: "none" }}>
+        <div className="card" style={{ maxWidth: "600px", margin: "0 auto", background: "#121212", border: "none" }}>
           <h2 className="text-center mb-4 text-white">Editar Atleta</h2>
 
           {message && <p className="text-white text-center">{message}</p>}
@@ -130,7 +130,7 @@ const EditAthlete = () => {
                   required={field !== "link" && field !== "rating"}
                   min={field === "rating" ? 0 : undefined}
                   max={field === "rating" ? 5 : undefined}
-                  style={{ background: "#121212", color: "white", border: "none" }}
+                  style={{ background: "#2c2c2c", color: "white", border: "none" }}
                 />
               </div>
             ))}
@@ -141,7 +141,7 @@ const EditAthlete = () => {
                 name="idGuardian"
                 value={athlete.idGuardian}
                 onChange={handleChange}
-                style={{ background: "#121212", color: "white", border: "none" }}
+                style={{ background: "#2c2c2c", color: "white", border: "none" }}
               >
                 <option value="">Selecione o Encarregado</option>
                 {guardians.map((g) => (
@@ -158,7 +158,7 @@ const EditAthlete = () => {
                 name="idTeam"
                 value={athlete.idTeam}
                 onChange={handleChange}
-                style={{ background: "#121212", color: "white", border: "none" }}
+                style={{ background: "#2c2c2c", color: "white", border: "none" }}
               >
                 <option value="">Selecione a Equipa</option>
                 {teams.map((t) => (
@@ -175,7 +175,7 @@ const EditAthlete = () => {
                 name="idPosition"
                 value={athlete.idPosition}
                 onChange={handleChange}
-                style={{ background: "#121212", color: "white", border: "none" }}
+                style={{ background: "#2c2c2c", color: "white", border: "none" }}
               >
                 <option value="">Selecione a Posição</option>
                 {positions.map((p) => (
@@ -189,7 +189,7 @@ const EditAthlete = () => {
             <button
               type="submit"
               className="btn btn-primary w-100"
-              style={{ background: "black", border: "none", padding: "12px" }}
+              style={{ background: "black", border: "none"}}
               disabled={isLoading}
             >
               {isLoading ? "Atualizando..." : "Atualizar"}
