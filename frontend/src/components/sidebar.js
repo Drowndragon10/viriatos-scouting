@@ -13,6 +13,7 @@ import {
     FaSpinner,
 } from 'react-icons/fa';
 import { getUserRoleFromToken } from '../components/jwtDecode';
+import logo from '../images/logo.png';
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -58,7 +59,16 @@ const Sidebar = () => {
                 borderBottomRightRadius: '25px',
             }}
         >
-            <div className="text-center py-3">
+            <div className="text-center py-3 d-flex align-items-center justify-content-center">
+                <img
+                    src={logo}
+                    alt="Logo Viriatos"
+                    style={{
+                        width: "35px",
+                        height: "35px",
+                        objectFit: "contain",
+                    }}
+                />
                 <h5 className="mt-2 titulo" style={{ color: 'white' }}>
                     Viriatos Scouting
                 </h5>
