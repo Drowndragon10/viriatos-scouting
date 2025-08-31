@@ -62,7 +62,7 @@ const InviteRegister = () => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Name"
+                placeholder="Nome"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -94,7 +94,7 @@ const InviteRegister = () => {
               <input
                 type="password"
                 className="form-control"
-                placeholder="Confirm Password"
+                placeholder="Confirmar Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -107,7 +107,7 @@ const InviteRegister = () => {
               />
             </div>
             <button type="submit" className="btn btn-warning w-100 mt-3" style={{ color: 'white' }}>
-              Register
+              Registar
             </button>
 
             {error && <p className="text-danger mt-3">{error}</p>}
@@ -125,7 +125,7 @@ const InviteRegister = () => {
                 cursor: 'pointer',
               }}
             >
-              Already have an account? Login!
+              Já tem conta? Login!
             </button>
           </div>
         </div>
