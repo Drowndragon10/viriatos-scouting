@@ -164,7 +164,7 @@ const AssignTask = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="btn btn-primary w-100 mt-3"
+              className="btn btn-primary w-100"
               style={{ backgroundColor: '#000', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
             >
               {isLoading ? 'Aguarde...' : 'Criar Tarefa'}

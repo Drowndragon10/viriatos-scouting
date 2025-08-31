@@ -33,7 +33,7 @@ const getTasks = async (req, res) => {
 const getTasksByUser = async (req, res) => {
     try {
         const tasks = await Task.findAll({
-            where: { idUser: req.params.id },
+            where: { idUser: req.params.idUser },
             include: [
                 { model: Match, as: 'match' },
                 { model: User, as: 'user' },

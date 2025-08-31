@@ -100,7 +100,7 @@ const AthletesPage = () => {
       <div className="mt-5" style={{ flex: 1, overflowY: 'auto' }}>
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <h2 className="mb-2 text-white">Atletas</h2>
-          <hr/> 
+          <hr />
           {message && <p className="text-white mb-3">{message}</p>}
 
           <div className="d-flex justify-content-between mb-4">
@@ -180,13 +180,15 @@ const AthletesPage = () => {
                   <th>Nome</th>
                   <th>Posição</th>
                   <th>Equipa</th>
-                  <th>Ações</th>
+                  {isAdmin && <th>Ações</th>} {/* Coluna só aparece para admin */}
                 </tr>
               </thead>
               <tbody>
                 {filteredAthletes.length === 0 ? (
                   <tr>
-                    <td colSpan="4" className="text-center text-white">Nenhum atleta encontrado.</td>
+                    <td colSpan={isAdmin ? "4" : "3"} className="text-center text-white">
+                      Nenhum atleta encontrado.
+                    </td>
                   </tr>
                 ) : (
                   filteredAthletes.map(a => (
@@ -194,21 +196,25 @@ const AthletesPage = () => {
                       <td>{a.name}</td>
                       <td>{a.position?.name}</td>
                       <td>{a.team?.name}</td>
-                      <td>
-                        {isAdmin && (
-                          <>
-                            <FaEdit style={{ cursor: "pointer", marginRight: "1rem" }} onClick={(e) => { e.stopPropagation(); handleEdit(a.idAthlete); }} />
-                            <FaTimes className="text-danger" style={{ cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); handleDelete(a.idAthlete); }} />
-                          </>
-                        )}
-                      </td>
+                      {isAdmin && (
+                        <td>
+                          <FaEdit
+                            style={{ cursor: "pointer", marginRight: "1rem" }}
+                            onClick={(e) => { e.stopPropagation(); handleEdit(a.idAthlete); }}
+                          />
+                          <FaTimes
+                            className="text-danger"
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => { e.stopPropagation(); handleDelete(a.idAthlete); }}
+                          />
+                        </td>
+                      )}
                     </tr>
                   ))
                 )}
               </tbody>
             </table>
           </div>
-
         </div>
       </div>
     </div>

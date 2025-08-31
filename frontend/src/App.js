@@ -22,6 +22,8 @@ import AssignTask from './pages/assignTask';
 import Invite from './pages/invite';
 import InviteRegister from './pages/inviteRegister';
 import EditMatch from './pages/editMatch';
+import MyTasks from './pages/myTasks.js'
+import MyReports from './pages/myReports.js';
 
 function App() {
   return (
@@ -85,6 +87,12 @@ function App() {
         <Route
           path="/task/assign"
           element={<ProtectedRoute element={AssignTask} allowedRoles={[1]} />} />
+        <Route
+          path="/myTasks"
+          element={<ProtectedRoute element={MyTasks} allowedRoles={[3]} />} />
+          <Route
+          path="/myReports"
+          element={<ProtectedRoute element={MyReports} allowedRoles={[3]} />} />
       </Routes>
     </Router>
   );

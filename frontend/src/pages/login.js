@@ -25,7 +25,7 @@ const LoginPage = () => {
       } else if (userRole === 2) {
         navigate('/teams');
       } else if (userRole === 3) {
-        navigate('/minhastarefas');
+        navigate('/myTasks');
       } else {
         navigate('/dashboard');
       }
