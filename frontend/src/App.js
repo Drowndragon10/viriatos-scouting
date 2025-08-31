@@ -21,6 +21,7 @@ import Tasks from './pages/tasks';
 import AssignTask from './pages/assignTask';
 import Invite from './pages/invite';
 import InviteRegister from './pages/inviteRegister';
+import EditMatch from './pages/editMatch';
 
 function App() {
   return (
@@ -72,6 +73,9 @@ function App() {
         <Route
           path="/match/create"
           element={<ProtectedRoute element={CreateMatch} allowedRoles={[1]} />} />
+          <Route
+          path="/match/edit/:idMatch"
+          element={<ProtectedRoute element={EditMatch} allowedRoles={[1]} />} />
         <Route
           path="/reports"
           element={<ProtectedRoute element={Reports} allowedRoles={[1, 3]} />} />

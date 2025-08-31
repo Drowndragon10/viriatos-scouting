@@ -109,7 +109,7 @@ const approveReport = async (req, res) => {
             return res.status(404).json({ error: 'Report not found.' });
         }
 
-        const updatedReport = await reportFound.update({ status: 'Approved' });
+        const updatedReport = await reportFound.update({ status: 'Aprovado' });
 
         return res.status(200).json({ report: updatedReport });
     } catch (error) {
@@ -126,7 +126,7 @@ const rejectReport = async (req, res) => {
             return res.status(404).json({ error: 'Report not found.' });
         }
 
-        const updatedReport = await reportFound.update({ status: 'Rejected' });
+        const updatedReport = await reportFound.update({ status: 'Rejeitado' });
 
         return res.status(200).json({ report: updatedReport });
     } catch (error) {

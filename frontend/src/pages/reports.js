@@ -23,7 +23,6 @@ const RelatoriosSubmetidos = () => {
                 const token = localStorage.getItem('authToken');
                 const config = { headers: { Authorization: `Bearer ${token}` } };
 
-                // Fetch reports conforme role
                 let response;
                 if (userRole === 1) {
                     response = await axios.get(`${apiUrl}/reports`, config);
@@ -53,7 +52,6 @@ const RelatoriosSubmetidos = () => {
         }
     };
 
-    // Filtros funcionando corretamente
     const relatoriosFiltrados = relatorios.filter(relatorio => {
         const atletaMatch = filtroAtleta ? relatorio.athlete?.name === filtroAtleta : true;
         const estadoMatch = filtroEstado ? relatorio.status === filtroEstado : true;
@@ -66,6 +64,34 @@ const RelatoriosSubmetidos = () => {
         currentPage * relatoriosPerPage
     );
 
+    const handleAccept = async (idReport) => {
+        try {
+            const token = localStorage.getItem('authToken');
+            const config = { headers: { Authorization: `Bearer ${token}` } };
+            await axios.put(`${apiUrl}/reports/accept/${idReport}`, {}, config);
+
+            setRelatorios(prev =>
+                prev.map(r => r.idReport === idReport ? { ...r, status: "Aprovado" } : r)
+            );
+        } catch (err) {
+            console.error("Erro ao aceitar relatório:", err);
+        }
+    };
+
+    const handleReject = async (idReport) => {
+        try {
+            const token = localStorage.getItem('authToken');
+            const config = { headers: { Authorization: `Bearer ${token}` } };
+            await axios.put(`${apiUrl}/reports/reject/${idReport}`, {}, config);
+
+            setRelatorios(prev =>
+                prev.map(r => r.idReport === idReport ? { ...r, status: "Rejeitado" } : r)
+            );
+        } catch (err) {
+            console.error("Erro ao rejeitar relatório:", err);
+        }
+    };
+
     return (
         <div style={{ display: "flex", backgroundColor: "#121212", height: "100vh", overflow: "hidden" }}>
             <Sidebar />
@@ -74,10 +100,10 @@ const RelatoriosSubmetidos = () => {
                     <h2 className="mb-2 text-white">
                         {userRole === 1 ? "Relatórios Submetidos" : "Seus Relatórios Submetidos"}
                     </h2>
-<hr/>
+                    <hr/>
+
                     {/* Filtros */}
                     <div className="d-flex justify-content-start mb-4 gap-3">
-                        {/* Atleta */}
                         <select
                             className="form-select"
                             style={{ width: '200px', backgroundColor: '#2C2C2C', color: 'white', border: 'none' }}
@@ -92,7 +118,6 @@ const RelatoriosSubmetidos = () => {
                                 ))}
                         </select>
 
-                        {/* Olheiro */}
                         <select
                             className="form-select"
                             style={{ width: '200px', backgroundColor: '#2C2C2C', color: 'white', border: 'none' }}
@@ -105,7 +130,6 @@ const RelatoriosSubmetidos = () => {
                             ))}
                         </select>
 
-                        {/* Estado */}
                         <select
                             className="form-select"
                             style={{ width: '200px', backgroundColor: '#2C2C2C', color: 'white', border: 'none' }}
@@ -156,6 +180,7 @@ const RelatoriosSubmetidos = () => {
                                                         </button>
                                                     </td>
                                                 </tr>
+
                                                 {expandedReportId === relatorio.idReport && (
                                                     <tr style={{ backgroundColor: "#1a1a1a" }}>
                                                         <td colSpan="6">
@@ -168,6 +193,26 @@ const RelatoriosSubmetidos = () => {
                                                                 <p><strong>Morfologia:</strong> {relatorio.morphology}</p>
                                                                 <p><strong>Rating Final:</strong> {relatorio.finalRating}</p>
                                                                 <p><strong>Texto Livre:</strong> {relatorio.freeText || "N/A"}</p>
+
+                                                                {/* Botões de Aprovar/Rejeitar */}
+                                                                {userRole === 1 && (
+                                                                    <div className="d-flex gap-2 mt-2">
+                                                                        <button
+                                                                            className="btn btn-success"
+                                                                            style={{ flex: 1 }}
+                                                                            onClick={() => handleAccept(relatorio.idReport)}
+                                                                        >
+                                                                            Aceitar
+                                                                        </button>
+                                                                        <button
+                                                                            className="btn btn-danger"
+                                                                            style={{ flex: 1 }}
+                                                                            onClick={() => handleReject(relatorio.idReport)}
+                                                                        >
+                                                                            Rejeitar
+                                                                        </button>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         </td>
                                                     </tr>
