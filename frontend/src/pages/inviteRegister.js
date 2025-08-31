@@ -57,7 +57,7 @@ const InviteRegister = () => {
         style={{ backgroundColor: '#2a2a2a' }}
       >
         <div className="register-form text-light p-4 w-100" style={{ maxWidth: '400px' }}>
-          <h2 className="mb-4 text-center">Register</h2>
+          <h2 className="mb-4 text-center">Registo</h2>
           <form onSubmit={handleRegister}>
             <div className="mb-3">
               <input
