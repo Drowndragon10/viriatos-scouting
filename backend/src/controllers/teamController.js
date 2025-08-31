@@ -93,8 +93,8 @@ const createTeam = async (req, res) => {
 // 📌 Update Team
 const updateTeam = async (req, res) => {
     try {
-        const { teamId } = req.params;
-        const team = await Team.findByPk(teamId);
+        const { idTeam } = req.params;
+        const team = await Team.findByPk(idTeam);
 
         if (!team) {
             return res.status(404).json({ message: 'Team not found.' });

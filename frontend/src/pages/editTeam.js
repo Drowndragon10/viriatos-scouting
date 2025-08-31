@@ -8,7 +8,7 @@ const EditTeam = () => {
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
-  const [equipa, setEquipa] = useState({
+  const [team, setEquipa] = useState({
     name: "",
     district: "",
     county: "",
@@ -24,7 +24,7 @@ const EditTeam = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // 🔹 Buscar equipa
+  // 🔹 Buscar team
   const fetchEquipa = useCallback(async () => {
     try {
       const token = localStorage.getItem("authToken");
@@ -40,8 +40,8 @@ const EditTeam = () => {
         idUser: data.idUser,
       });
     } catch (error) {
-      console.error("Erro ao buscar equipa:", error);
-      setMessage("Erro ao carregar dados da equipa.");
+      console.error("Erro ao buscar team:", error);
+      setMessage("Erro ao carregar dados da team.");
     }
   }, [apiUrl, idTeam]);
 
@@ -61,7 +61,7 @@ const EditTeam = () => {
       setUsers(userRes.data.filter((u) => u.idUserType === 2));
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
-      setMessage("Erro ao carregar categorias, tipos de equipa ou utilizadores.");
+      setMessage("Erro ao carregar categorias, tipos de team ou utilizadores.");
     }
   }, [apiUrl]);
 
@@ -80,14 +80,14 @@ const EditTeam = () => {
     setIsLoading(true);
     try {
       const token = localStorage.getItem("authToken");
-      await axios.put(`${apiUrl}/teams/${idTeam}`, equipa, {
+      await axios.put(`${apiUrl}/teams/${idTeam}`, team, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage("Equipa atualizada com sucesso!");
       setTimeout(() => navigate("/teams"), 1500);
     } catch (error) {
-      console.error("Erro ao atualizar equipa:", error);
-      setMessage(error.response?.data?.error || "Erro ao atualizar equipa.");
+      console.error("Erro ao atualizar team:", error);
+      setMessage(error.response?.data?.error || "Erro ao atualizar team.");
     } finally {
       setIsLoading(false);
     }
@@ -117,7 +117,7 @@ const EditTeam = () => {
                 type="text"
                 className="form-control"
                 name="name"
-                value={equipa.name || ""}
+                value={team.name || ""}
                 onChange={handleChange}
                 placeholder="Digite o nome"
                 required
@@ -131,7 +131,7 @@ const EditTeam = () => {
                 type="text"
                 className="form-control"
                 name="district"
-                value={equipa.district || ""}
+                value={team.district || ""}
                 onChange={handleChange}
                 placeholder="Digite o distrito"
                 style={{ background: "#2c2c2c", color: "white", border: "none" }}
@@ -144,7 +144,7 @@ const EditTeam = () => {
                 type="text"
                 className="form-control"
                 name="county"
-                value={equipa.county || ""}
+                value={team.county || ""}
                 onChange={handleChange}
                 placeholder="Digite o concelho"
                 style={{ background: "#2c2c2c", color: "white", border: "none" }}
@@ -156,7 +156,7 @@ const EditTeam = () => {
               <select
                 className="form-control"
                 name="idAgeCategory"
-                value={equipa.idAgeCategory || ""}
+                value={team.idAgeCategory || ""}
                 onChange={handleChange}
                 required
                 style={{ background: "#2c2c2c", color: "white", border: "none" }}
@@ -175,7 +175,7 @@ const EditTeam = () => {
               <select
                 className="form-control"
                 name="idTeamType"
-                value={equipa.idTeamType || ""}
+                value={team.idTeamType || ""}
                 onChange={handleChange}
                 required
                 style={{ background: "#2c2c2c", color: "white", border: "none" }}
@@ -194,7 +194,7 @@ const EditTeam = () => {
               <select
                 className="form-control"
                 name="idUser"
-                value={equipa.idUser || ""}
+                value={team.idUser || ""}
                 onChange={handleChange}
                 required
                 style={{ background: "#2c2c2c", color: "white", border: "none" }}
