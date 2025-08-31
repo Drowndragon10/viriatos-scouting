@@ -128,7 +128,7 @@ const HomePage = () => {
             </div>
           </div>
           <a
-            href="#"
+            href="/app-release.apk" target="_blank" rel="noopener noreferrer" download
             onMouseEnter={() => setDownloadHover(true)}
             onMouseLeave={() => setDownloadHover(false)}
             style={{
@@ -147,8 +147,6 @@ const HomePage = () => {
               transition: 'filter 0.2s, box-shadow 0.2s',
               filter: downloadHover ? 'brightness(0.93)' : 'none',
             }}
-            target="_blank"
-            rel="noopener noreferrer"
           >
             Faça o Download aqui!
           </a>
