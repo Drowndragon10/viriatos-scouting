@@ -21,12 +21,12 @@ const AthletesPage = () => {
   const [error, setError] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [expandedAthleteId, setExpandedAthleteId] = useState(null);
+  const [reports, setReports] = useState({}); // <--- para armazenar se atleta já tem relatório
   const navigate = useNavigate();
-
   const apiUrl = process.env.REACT_APP_BACKEND_URL;
+  const userRole = getUserRoleFromToken(); // role do usuário logado
 
   useEffect(() => {
-    const userRole = getUserRoleFromToken();
     setIsAdmin(userRole === 1);
 
     const fetchData = async () => {
@@ -44,13 +44,26 @@ const AthletesPage = () => {
         setAllAthletes(athletesRes.data);
         setPositions(positionsRes.data);
         setTeams(teamsRes.data);
+
+        // buscar relatórios existentes
+        const reportsObj = {};
+        for (let athlete of athletesRes.data) {
+          try {
+            const res = await axios.get(`${apiUrl}/reports/athlete/${athlete.idAthlete}`, config);
+            reportsObj[athlete.idAthlete] = !!res.data; // true se já tiver relatório
+          } catch {
+            reportsObj[athlete.idAthlete] = false;
+          }
+        }
+        setReports(reportsObj);
+
       } catch (err) {
         setError('Erro ao carregar os dados.');
       }
     };
 
     fetchData();
-  }, [apiUrl]);
+  }, [apiUrl, userRole]);
 
   const handleEdit = (idAthlete) => {
     alert(`Editar atleta ${idAthlete}`);
@@ -96,6 +109,7 @@ const AthletesPage = () => {
   );
 
   const handleAddAthlete = () => navigate("/athlete/create");
+  const handleCreateReport = (idAthlete) => navigate(`/report/${idAthlete}`);
 
   if (error) return <div className="text-center py-10">{error}</div>;
 
@@ -245,6 +259,24 @@ const AthletesPage = () => {
                               <p><strong>Altura:</strong> {a.height ? `${a.height} cm` : "N/A"}</p>
                               <p><strong>Peso:</strong> {a.weight ? `${a.weight} kg` : "N/A"}</p>
                               <p><strong>Nacionalidade:</strong> {a.nationality || "N/A"}</p>
+
+                              {/* Botão Criar Relatório para Olheiro */}
+                              {userRole === 3 && (
+                                <button
+                                  onClick={() => handleCreateReport(a.idAthlete)}
+                                  className="btn"
+                                  style={{
+                                    backgroundColor: reports[a.idAthlete] ? "grey" : "gold",
+                                    color: reports[a.idAthlete] ? "#ccc" : "black",
+                                    fontWeight: "bold",
+                                    marginTop: "10px",
+                                    cursor: reports[a.idAthlete] ? "not-allowed" : "pointer",
+                                  }}
+                                  disabled={reports[a.idAthlete]}
+                                >
+                                  Criar Relatório
+                                </button>
+                              )}
                             </div>
                           </td>
                         </tr>
