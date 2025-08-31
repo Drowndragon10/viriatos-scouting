@@ -34,12 +34,12 @@ const inviteUser = async (req, res) => {
             Messages: [
                 {
                     From: {
-                        Email: 'jetmailgoncalo@gmail.com', // remetente fixo
+                        Email: 'jetmailgoncalo@gmail.com',
                         Name: 'Scouting App',
                     },
                     To: [
                         {
-                            Email: email, // destinatário é o email do req.body
+                            Email: email,
                             Name: 'User',
                         },
                     ],
