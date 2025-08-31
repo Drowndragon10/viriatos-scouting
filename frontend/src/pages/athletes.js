@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Sidebar from "../components/sidebar";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/sidebar";
 import { FaEdit, FaTimes } from "react-icons/fa";
 import { getUserRoleFromToken } from "../components/jwtDecode";
 import DatePicker from "react-datepicker";
@@ -20,8 +20,9 @@ const AthletesPage = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const [expandedAthleteId, setExpandedAthleteId] = useState(null);
   const navigate = useNavigate();
+
   const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
@@ -51,8 +52,10 @@ const AthletesPage = () => {
     fetchData();
   }, [apiUrl]);
 
-  const handleAdd = () => navigate("/athlete/create");
-  const handleEdit = (idAthlete) => navigate(`/athlete/edit/${idAthlete}`);
+  const handleEdit = (idAthlete) => {
+    alert(`Editar atleta ${idAthlete}`);
+  };
+
   const handleDelete = async (idAthlete) => {
     if (!window.confirm("Tem certeza que deseja excluir este atleta?")) {
       setMessage('A exclusão foi cancelada.');
@@ -92,6 +95,8 @@ const AthletesPage = () => {
     a.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleAddAthlete = () => navigate("/athlete/create");
+
   if (error) return <div className="text-center py-10">{error}</div>;
 
   return (
@@ -117,8 +122,13 @@ const AthletesPage = () => {
                 Filtros ▾
               </button>
             </div>
+
             {isAdmin && (
-              <button onClick={handleAdd} className="btn" style={{ backgroundColor: "#2C2C2C", color: "#ffffff", borderRadius: "10px", padding: "7px 20px" }}>
+              <button
+                onClick={handleAddAthlete}
+                className="btn"
+                style={{ backgroundColor: "#2C2C2C", color: "white", border: "none" }}
+              >
                 + Adicionar Atleta
               </button>
             )}
@@ -180,36 +190,66 @@ const AthletesPage = () => {
                   <th>Nome</th>
                   <th>Posição</th>
                   <th>Equipa</th>
-                  {isAdmin && <th>Ações</th>} {/* Coluna só aparece para admin */}
+                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredAthletes.length === 0 ? (
                   <tr>
-                    <td colSpan={isAdmin ? "4" : "3"} className="text-center text-white">
+                    <td colSpan="4" className="text-center text-white">
                       Nenhum atleta encontrado.
                     </td>
                   </tr>
                 ) : (
                   filteredAthletes.map(a => (
-                    <tr key={a.idAthlete} onClick={() => navigate(`/athlete/${a.idAthlete}`)} style={{ cursor: 'pointer' }}>
-                      <td>{a.name}</td>
-                      <td>{a.position?.name}</td>
-                      <td>{a.team?.name}</td>
-                      {isAdmin && (
+                    <React.Fragment key={a.idAthlete}>
+                      <tr>
+                        <td>{a.name}</td>
+                        <td>{a.position?.name}</td>
+                        <td>{a.team?.name}</td>
                         <td>
-                          <FaEdit
-                            style={{ cursor: "pointer", marginRight: "1rem" }}
-                            onClick={(e) => { e.stopPropagation(); handleEdit(a.idAthlete); }}
-                          />
-                          <FaTimes
-                            className="text-danger"
-                            style={{ cursor: "pointer" }}
-                            onClick={(e) => { e.stopPropagation(); handleDelete(a.idAthlete); }}
-                          />
+                          <button
+                            className="btn"
+                            style={{ backgroundColor: "#2C2C2C", color: "white", border: "none" }}
+                            onClick={() =>
+                              setExpandedAthleteId(expandedAthleteId === a.idAthlete ? null : a.idAthlete)
+                            }
+                          >
+                            Detalhes
+                          </button>
+                          {isAdmin && (
+                            <>
+                              <FaEdit
+                                style={{ cursor: "pointer", marginLeft: "1rem" }}
+                                onClick={() => handleEdit(a.idAthlete)}
+                              />
+                              <FaTimes
+                                className="text-danger"
+                                style={{ cursor: "pointer", marginLeft: "0.5rem" }}
+                                onClick={() => handleDelete(a.idAthlete)}
+                              />
+                            </>
+                          )}
                         </td>
+                      </tr>
+
+                      {expandedAthleteId === a.idAthlete && (
+                        <tr style={{ backgroundColor: "#1a1a1a" }}>
+                          <td colSpan="4">
+                            <div>
+                              <p><strong>Nome:</strong> {a.name}</p>
+                              <p><strong>Data de Nascimento:</strong> {new Date(a.birthDate).toLocaleDateString()}</p>
+                              <p><strong>Posição:</strong> {a.position?.name || "N/A"}</p>
+                              <p><strong>Equipa:</strong> {a.team?.name || "N/A"}</p>
+                              <p><strong>Pé Preferido:</strong> {a.preferredFoot || "N/A"}</p>
+                              <p><strong>Altura:</strong> {a.height ? `${a.height} cm` : "N/A"}</p>
+                              <p><strong>Peso:</strong> {a.weight ? `${a.weight} kg` : "N/A"}</p>
+                              <p><strong>Nacionalidade:</strong> {a.nationality || "N/A"}</p>
+                            </div>
+                          </td>
+                        </tr>
                       )}
-                    </tr>
+                    </React.Fragment>
                   ))
                 )}
               </tbody>

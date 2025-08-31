@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../components/sidebar";
 import { getUserIdFromToken } from "../components/jwtDecode";
+import { useNavigate } from "react-router-dom";
 
 const TarefasOlheiro = () => {
   const [tarefas, setTarefas] = useState([]);
   const [expandedTaskId, setExpandedTaskId] = useState(null);
   const [jogos, setJogos] = useState([]);
+  const [relatorios, setRelatorios] = useState([]);
   const apiUrl = process.env.REACT_APP_BACKEND_URL;
   const idUser = getUserIdFromToken();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const carregarTarefas = async () => {
@@ -33,8 +36,20 @@ const TarefasOlheiro = () => {
       }
     };
 
+    const carregarRelatorios = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const config = { headers: { Authorization: `Bearer ${token}` } };
+        const response = await axios.get(`${apiUrl}/reports`, config);
+        setRelatorios(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar relatórios:", error);
+      }
+    };
+
     carregarTarefas();
     carregarJogos();
+    carregarRelatorios();
   }, [apiUrl, idUser]);
 
   const getEquipasDoJogo = (idMatch) => {
@@ -45,6 +60,17 @@ const TarefasOlheiro = () => {
       return `${casa ? casa.equipa.nome : "Equipa Casa"} vs ${visitante ? visitante.equipa.nome : "Equipa Visitante"}`;
     }
     return "Sem equipas";
+  };
+
+  const criarRelatorio = (tarefa) => {
+    if (tarefa?.athlete?.idAthlete) {
+      navigate(`/relatorio/${tarefa.athlete.idAthlete}`);
+    }
+  };
+
+  // verifica se já existe relatório para o atleta
+  const hasRelatorio = (idAthlete) => {
+    return relatorios.some((r) => r.athlete?.idAthlete === idAthlete);
   };
 
   return (
@@ -106,6 +132,25 @@ const TarefasOlheiro = () => {
                             <div>
                               <p><strong>Descrição:</strong> {tarefa.description || "Sem descrição"}</p>
                               <p><strong>Olheiro:</strong> {tarefa.user?.name || "N/A"}</p>
+
+                              {tarefa?.athlete?.idAthlete && (
+                                <button
+                                  className="btn"
+                                  style={{
+                                    backgroundColor: hasRelatorio(tarefa.athlete.idAthlete) ? "#555" : "#FDD522",
+                                    color: "white",
+                                    border: "none",
+                                    padding: "8px 16px",
+                                    marginTop: "10px",
+                                    borderRadius: "5px",
+                                    cursor: hasRelatorio(tarefa.athlete.idAthlete) ? "not-allowed" : "pointer",
+                                  }}
+                                  disabled={hasRelatorio(tarefa.athlete.idAthlete)}
+                                  onClick={() => criarRelatorio(tarefa)}
+                                >
+                                  {hasRelatorio(tarefa.athlete.idAthlete) ? "Relatório Existente" : "Criar Relatório"}
+                                </button>
+                              )}
                             </div>
                           </td>
                         </tr>

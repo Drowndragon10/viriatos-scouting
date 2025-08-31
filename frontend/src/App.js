@@ -24,6 +24,7 @@ import InviteRegister from './pages/inviteRegister';
 import EditMatch from './pages/editMatch';
 import MyTasks from './pages/myTasks.js'
 import MyReports from './pages/myReports.js';
+import CreateReport from './pages/createReport.js';
 
 function App() {
   return (
@@ -93,6 +94,9 @@ function App() {
           <Route
           path="/myReports"
           element={<ProtectedRoute element={MyReports} allowedRoles={[3]} />} />
+          <Route
+          path="/report/:idAthlete"
+          element={<ProtectedRoute element={CreateReport} allowedRoles={[3]} />} />
       </Routes>
     </Router>
   );

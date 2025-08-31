@@ -32,48 +32,47 @@ const getReportById = async (req, res) => {
 };
 
 const createReport = async (req, res) => {
-    try {
-        const { idUser, ...restData } = req.body;
+  try {
+    const { idUser, ...restData } = req.body;
+    const { idAthlete } = req.params;
 
-        if (!idUser) {
-            return res.status(400).json({ error: 'User ID is required.' });
-        }
-
-        const { idAthlete } = req.params;
-
-        // Check if athlete exists
-        const athleteFound = await Athlete.findByPk(idAthlete);
-        if (!athleteFound) {
-            return res.status(404).json({ error: 'Athlete not found.' });
-        }
-
-        // Check if user exists
-        const userFound = await User.findByPk(idUser);
-        if (!userFound) {
-            return res.status(404).json({ error: 'User not found.' });
-        }
-
-        // Check if report already exists for this athlete
-        const existingReport = await Report.findOne({
-            where: { idAthlete },
-        });
-
-        if (existingReport) {
-            return res.status(400).json({ error: 'A report already exists for this athlete.' });
-        }
-
-        const reportData = {
-            ...restData,
-            idAthlete,
-            idUser,
-        };
-
-        const createdReport = await Report.create(reportData);
-
-        return res.status(201).json(createdReport);
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
+    if (!idUser) {
+      return res.status(400).json({ error: 'User ID is required.' });
     }
+
+    // Verifica se atleta existe
+    const athleteFound = await Athlete.findByPk(idAthlete);
+    if (!athleteFound) {
+      return res.status(404).json({ error: 'Athlete not found.' });
+    }
+
+    // Verifica se user existe
+    const userFound = await User.findByPk(idUser);
+    if (!userFound) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    // Verifica se já existe relatório do mesmo user para o mesmo atleta
+    const existingReport = await Report.findOne({
+      where: { idAthlete, idUser },
+    });
+
+    if (existingReport) {
+      return res.status(400).json({ error: 'Já existe um relatório deste utilizador para este atleta.' });
+    }
+
+    const reportData = {
+      ...restData,
+      idAthlete,
+      idUser,
+    };
+
+    const createdReport = await Report.create(reportData);
+    return res.status(201).json(createdReport);
+
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
 };
 
 const getReportsByUserId = async (req, res) => {
