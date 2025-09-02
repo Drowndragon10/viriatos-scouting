@@ -126,7 +126,7 @@ const Teams = () => {
                 onChange={(e) => setAgeCategoryFilter(e.target.value)}
                 style={{ backgroundColor: "#2C2C2C", width: "200px", border: "none", color: "white" }}
               >
-                <option value="">Todas Categorias Etárias</option>
+                <option value="">Classificação Etária</option>
                 {ageCategories.map((category) => (
                   <option key={category.idAgeCategory} value={category.idAgeCategory}>
                     {category.name}
