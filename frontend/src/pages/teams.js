@@ -160,7 +160,7 @@ const Teams = () => {
                   padding: "7px 20px",
                 }}
               >
-                + Add Team
+                + Adicionar Nova Equipa
               </button>
             )}
           </div>
