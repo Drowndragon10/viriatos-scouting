@@ -66,7 +66,7 @@ const AthletesPage = () => {
   }, [apiUrl, userRole]);
 
   const handleEdit = (idAthlete) => {
-    navigate(`/edit/${idAthlete}`);
+    navigate(`athlete/edit/${idAthlete}`);
   };
 
   const handleDelete = async (idAthlete) => {
