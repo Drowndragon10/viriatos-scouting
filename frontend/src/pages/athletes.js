@@ -66,7 +66,7 @@ const AthletesPage = () => {
   }, [apiUrl, userRole]);
 
   const handleEdit = (idAthlete) => {
-    alert(`Editar atleta ${idAthlete}`);
+    navigate(`athletes/edit/${idAthlete}`);
   };
 
   const handleDelete = async (idAthlete) => {
@@ -255,7 +255,6 @@ const AthletesPage = () => {
                               <p><strong>Data de Nascimento:</strong> {new Date(a.birthDate).toLocaleDateString()}</p>
                               <p><strong>Posição:</strong> {a.position?.name || "N/A"}</p>
                               <p><strong>Equipa:</strong> {a.team?.name || "N/A"}</p>
-                              <p><strong>Pé Preferido:</strong> {a.preferredFoot || "N/A"}</p>
                               <p><strong>Altura:</strong> {a.height ? `${a.height} cm` : "N/A"}</p>
                               <p><strong>Peso:</strong> {a.weight ? `${a.weight} kg` : "N/A"}</p>
                               <p><strong>Nacionalidade:</strong> {a.nationality || "N/A"}</p>

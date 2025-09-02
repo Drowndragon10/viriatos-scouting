@@ -114,7 +114,7 @@ const Teams = () => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search by name"
+                placeholder="Procurar por nome"
                 value={nameFilter}
                 onChange={(e) => setNameFilter(e.target.value)}
                 style={{ backgroundColor: "#2C2C2C", width: "250px", border: "none", color: "white" }}
@@ -126,7 +126,7 @@ const Teams = () => {
                 onChange={(e) => setAgeCategoryFilter(e.target.value)}
                 style={{ backgroundColor: "#2C2C2C", width: "200px", border: "none", color: "white" }}
               >
-                <option value="">All Age Categories</option>
+                <option value="">Todas Caterias Etárias</option>
                 {ageCategories.map((category) => (
                   <option key={category.idAgeCategory} value={category.idAgeCategory}>
                     {category.name}
@@ -140,7 +140,7 @@ const Teams = () => {
                 onChange={(e) => setTeamTypeFilter(e.target.value)}
                 style={{ backgroundColor: "#2C2C2C", width: "200px", border: "none", color: "white" }}
               >
-                <option value="">All Team Types</option>
+                <option value="">Todos Tipos de Equipa</option>
                 {teamTypes.map((type) => (
                   <option key={type.idTeamType} value={type.idTeamType}>
                     {type.name}
